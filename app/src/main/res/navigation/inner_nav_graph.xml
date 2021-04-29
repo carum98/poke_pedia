@@ -19,4 +19,13 @@
         android:name="com.example.pokepedia.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" />
+    <fragment
+        android:id="@+id/itemFragment2"
+        android:name="com.example.pokepedia.ItemFragment2"
+        android:label="fragment_item_list2"
+        tools:layout="@layout/fragment_item_list2" >
+        <action
+            android:id="@+id/action_itemFragment2_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

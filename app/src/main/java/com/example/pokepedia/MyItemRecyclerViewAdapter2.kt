@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 
 import com.example.pokepedia.dummy.DummyContent.DummyItem
 
-class MyItemRecyclerViewAdapter(
+class MyItemRecyclerViewAdapter2(
     private val values: List<DummyItem>
-) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MyItemRecyclerViewAdapter2.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_item, parent, false)
+            .inflate(R.layout.fragment_item2, parent, false)
         return ViewHolder(view)
     }
 
@@ -26,7 +25,7 @@ class MyItemRecyclerViewAdapter(
         holder.contentView.text = item.content
 
         holder.itemView.setOnClickListener {
-            holder.itemView.findNavController().navigate(R.id.action_itemFragment_to_detailFragment)
+            holder.itemView.findNavController().navigate(R.id.action_itemFragment2_to_detailFragment)
         }
     }
 

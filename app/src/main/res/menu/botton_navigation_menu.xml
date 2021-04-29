@@ -4,5 +4,5 @@
     <item android:title="@string/pokemones"
         android:id="@+id/itemFragment"/>
     <item android:title="@string/favoritos"
-        android:id="@+id/detailFragment"/>
+        android:id="@+id/itemFragment2"/>
 </menu>
