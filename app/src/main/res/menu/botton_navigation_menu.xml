@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/pokemones"
+        android:id="@+id/itemFragment"/>
+    <item android:title="@string/favoritos"
+        android:id="@+id/detailFragment"/>
+</menu>
