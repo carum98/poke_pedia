@@ -2,7 +2,14 @@
     <string name="app_name">PokePedia</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="login">Ingresar</string>
-    <string name="pokemones">Pokemones</string>
+    <string name="login">Entrar</string>
+    <string name="todos">Todos</string>
     <string name="favoritos">Favoritos</string>
+    <string name="entrenador">Entrenador</string>
+    <string name="genero">Género</string>
+    <string name="masculino">Masculino</string>
+    <string name="femenino">Femenino</string>
+    <string name="recientes">Recientes</string>
+    <string name="logo">Logo</string>
+    <string name="pokemon">Pokemon</string>
 </resources>

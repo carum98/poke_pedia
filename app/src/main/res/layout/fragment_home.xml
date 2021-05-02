@@ -22,8 +22,11 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#CC0000"
+        app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/botton_navigation_menu"/>
+        app:layout_constraintTop_toBottomOf="@+id/inner_navhost_fragment"
+        app:menu="@menu/botton_navigation_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
