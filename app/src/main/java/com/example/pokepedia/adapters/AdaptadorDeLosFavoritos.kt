@@ -1,4 +1,4 @@
-package com.example.pokepedia
+package com.example.pokepedia.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,31 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import com.example.pokepedia.R
 
-import com.example.pokepedia.dummy.DummyContent.DummyItem
+import com.example.pokepedia.modelos.Pokemon
 
-class MyItemRecyclerViewAdapter(
-    private val values: List<DummyItem>
-) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
+class AdaptadorDeLosFavoritos(
+    private val losPokemonesFavoritos: List<Pokemon>
+) : RecyclerView.Adapter<AdaptadorDeLosFavoritos.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_item, parent, false)
+            .inflate(R.layout.fragment_favoritos, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        val item = losPokemonesFavoritos[position]
+        holder.idView.text = item.id.toString()
+        holder.contentView.text = item.nombre
 
         holder.itemView.setOnClickListener {
-            holder.itemView.findNavController().navigate(R.id.action_itemFragment_to_detailFragment)
+            holder.itemView.findNavController().navigate(R.id.action_itemFragment2_to_detailFragment)
         }
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = losPokemonesFavoritos.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val idView: TextView = view.findViewById(R.id.item_number)

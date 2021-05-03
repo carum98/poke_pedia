@@ -7,23 +7,23 @@
 
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.example.pokepedia.ItemFragment"
+        android:name="com.example.pokepedia.fragments.ListaPrincipalFragment"
         android:label="fragment_item_list"
-        tools:layout="@layout/fragment_item_list" >
+        tools:layout="@layout/fragment_ListaPrincipal" >
         <action
             android:id="@+id/action_itemFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.pokepedia.DetailFragment"
+        android:name="com.example.pokepedia.fragments.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" />
     <fragment
         android:id="@+id/itemFragment2"
-        android:name="com.example.pokepedia.ItemFragment2"
+        android:name="com.example.pokepedia.fragments.ListaDeFavoritosFragment"
         android:label="fragment_item_list2"
-        tools:layout="@layout/fragment_item_list2" >
+        tools:layout="@layout/fragment_ListaDeFavoritos" >
         <action
             android:id="@+id/action_itemFragment2_to_detailFragment"
             app:destination="@id/detailFragment" />
