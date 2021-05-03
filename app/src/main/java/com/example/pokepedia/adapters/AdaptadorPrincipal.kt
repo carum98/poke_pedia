@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.pokepedia.R
 
 import com.example.pokepedia.modelos.Pokemon
@@ -24,10 +25,14 @@ class AdaptadorPrincipal(
         val item = losPokemones[position]
         holder.idView.text = item.id.toString()
         holder.contentView.text = item.nombre
-
+        Glide.with(holder.itemView.context)
+            .load(item.fotoURL)
+            .circleCrop()
+            .into(holder.itemView.findViewById(R.id.laFotoDelPokemon))
         holder.itemView.setOnClickListener {
             holder.itemView.findNavController().navigate(R.id.action_itemFragment_to_detailFragment)
         }
+
     }
 
     override fun getItemCount(): Int = losPokemones.size
