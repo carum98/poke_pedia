@@ -1,5 +1,6 @@
 package com.example.pokepedia.adapters
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.pokepedia.R
+import com.example.pokepedia.fragments.ListaPrincipalFragment
+import com.example.pokepedia.fragments.ListaPrincipalFragmentDirections
 
 import com.example.pokepedia.modelos.Pokemon
 
@@ -29,8 +32,17 @@ class AdaptadorPrincipal(
             .load(item.fotoURL)
             .circleCrop()
             .into(holder.itemView.findViewById(R.id.laFotoDelPokemon))
+
+        //val action = LoginFragmentDirections.actionLoginFragmentToDetailFragment(
+          //      User("Heriberto", "Urena")
+           //)
+
         holder.itemView.setOnClickListener {
-            holder.itemView.findNavController().navigate(R.id.action_itemFragment_to_detailFragment)
+//            var  elIdDelPokemon =   holder.idView.text.toString().toInt()
+            var action = ListaPrincipalFragmentDirections.actionItemFragmentToDetailFragment(
+                losPokemones[position]
+            )
+            holder.itemView.findNavController().navigate(action)
         }
 
     }

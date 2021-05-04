@@ -9,7 +9,7 @@
         android:id="@+id/itemFragment"
         android:name="com.example.pokepedia.fragments.ListaPrincipalFragment"
         android:label="fragment_item_list"
-        tools:layout="@layout/fragment_ListaPrincipal" >
+        tools:layout="@layout/fragment_lista_principal" >
         <action
             android:id="@+id/action_itemFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -18,12 +18,19 @@
         android:id="@+id/detailFragment"
         android:name="com.example.pokepedia.fragments.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="pokemon"
+            app:argType="com.example.pokepedia.modelos.Pokemon" />
+        <action
+            android:id="@+id/action_detailFragment_self"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/itemFragment2"
+        android:id="@+id/fragment_ListaDeFavoritos"
         android:name="com.example.pokepedia.fragments.ListaDeFavoritosFragment"
         android:label="fragment_item_list2"
-        tools:layout="@layout/fragment_ListaDeFavoritos" >
+        tools:layout="@layout/fragment_lista_favoritos" >
         <action
             android:id="@+id/action_itemFragment2_to_detailFragment"
             app:destination="@id/detailFragment" />
