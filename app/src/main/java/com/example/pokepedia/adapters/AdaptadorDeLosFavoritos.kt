@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.pokepedia.R
+import com.example.pokepedia.fragments.ListaDeFavoritosFragmentDirections
+import com.example.pokepedia.fragments.ListaPrincipalFragmentDirections
 
 import com.example.pokepedia.modelos.Pokemon
 
@@ -24,9 +27,17 @@ class AdaptadorDeLosFavoritos(
         val item = losPokemonesFavoritos[position]
         holder.idView.text = item.id.toString()
         holder.contentView.text = item.nombre
+        Glide.with(holder.itemView.context)
+                .load(item.fotoURL)
+                .circleCrop()
+                .into(holder.itemView.findViewById(R.id.laFotoDelPokemon))
 
         holder.itemView.setOnClickListener {
-            holder.itemView.findNavController().navigate(R.id.action_itemFragment2_to_detailFragment)
+            var action = ListaDeFavoritosFragmentDirections.actionListaDeFavoritosFragmentToDetailFragment(
+                losPokemonesFavoritos[position]
+            )
+            holder.itemView.findNavController().navigate(action)
+//            holder.itemView.findNavController().navigate(R.id.action_itemFragment2_to_detailFragment)
         }
     }
 

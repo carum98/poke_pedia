@@ -46,7 +46,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             .into(binding.elPokenon)
 
         binding.Evolucion.setOnClickListener{
-            var action = DetailFragmentDirections.actionDetailFragmentSelf( laEvolucion  )
+            var action = DetailFragmentDirections.actiondetailfragmentself(laEvolucion)
             binding.root.findNavController().navigate(action)
         }
     }

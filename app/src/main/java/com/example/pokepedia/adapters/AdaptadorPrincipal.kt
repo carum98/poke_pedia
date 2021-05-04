@@ -39,7 +39,7 @@ class AdaptadorPrincipal(
 
         holder.itemView.setOnClickListener {
 //            var  elIdDelPokemon =   holder.idView.text.toString().toInt()
-            var action = ListaPrincipalFragmentDirections.actionItemFragmentToDetailFragment(
+            var action = ListaPrincipalFragmentDirections.actionListaPrincipalFragmentToDetailFragment(
                 losPokemones[position]
             )
             holder.itemView.findNavController().navigate(action)

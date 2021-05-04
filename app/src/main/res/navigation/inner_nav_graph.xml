@@ -3,36 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/inner_nav_graph"
-    app:startDestination="@id/itemFragment">
+    app:startDestination="@id/listaPrincipalFragment">
 
-    <fragment
-        android:id="@+id/itemFragment"
-        android:name="com.example.pokepedia.fragments.ListaPrincipalFragment"
-        android:label="fragment_item_list"
-        tools:layout="@layout/fragment_lista_principal" >
-        <action
-            android:id="@+id/action_itemFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.pokepedia.fragments.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="pokemon"
             app:argType="com.example.pokepedia.modelos.Pokemon" />
         <action
-            android:id="@+id/action_detailFragment_self"
+            android:id="@+id/actiondetailfragmentself"
             app:destination="@id/detailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/fragment_ListaDeFavoritos"
+        android:id="@+id/listaDeFavoritosFragment"
         android:name="com.example.pokepedia.fragments.ListaDeFavoritosFragment"
-        android:label="fragment_item_list2"
-        tools:layout="@layout/fragment_lista_favoritos" >
+        android:label="fragment_lista_favoritos"
+        tools:layout="@layout/fragment_lista_favoritos">
         <action
-            android:id="@+id/action_itemFragment2_to_detailFragment"
+            android:id="@+id/action_listaDeFavoritosFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listaPrincipalFragment"
+        android:name="com.example.pokepedia.fragments.ListaPrincipalFragment"
+        android:label="fragment_lista_principal"
+        tools:layout="@layout/fragment_lista_principal">
+        <action
+            android:id="@+id/action_listaPrincipalFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
 </navigation>
