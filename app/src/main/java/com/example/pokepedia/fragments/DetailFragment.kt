@@ -36,19 +36,28 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         elPokemonActual= losPokemonesCompletos.first {it.id==losArgumentos.pokemon.id }
         binding.elNombre.text = elPokemonActual.nombre
         binding.laDescripcion.text =elPokemonActual.descripcion
-        var laEvolucion: Pokemon=losPokemonesCompletos.first { it.id==elPokemonActual.idEvolucion}
-        var elNombreDeLaEvolucion = if (laEvolucion.id == losArgumentos.pokemon.id) "No tiene evolución"
-                                    else "Evoluciona a: " +laEvolucion.nombre
-
-                binding.textView5.text = elNombreDeLaEvolucion
+        var laEvolucion: Pokemon = GestioneLaEvolucion()
         Glide.with(binding.elPokenon.context)
             .load(losArgumentos.pokemon.fotoURL)
             .into(binding.elPokenon)
-
         binding.Evolucion.setOnClickListener{
             var action = DetailFragmentDirections.actiondetailfragmentself(laEvolucion)
             binding.root.findNavController().navigate(action)
         }
+    }
+
+    private fun GestioneLaEvolucion(): Pokemon {
+        var elNombreDeLaEvolucion: String
+        var laEvolucion: Pokemon = losPokemonesCompletos.first { it.id == elPokemonActual.idEvolucion }
+        if (laEvolucion.id == losArgumentos.pokemon.id) {
+            elNombreDeLaEvolucion = "No tiene evolución"
+            binding.Evolucion.visibility = View.GONE
+        } else {
+            elNombreDeLaEvolucion = "Evoluciona a: " + laEvolucion.nombre
+            binding.Evolucion.visibility = View.VISIBLE
+        }
+        binding.textView5.text = elNombreDeLaEvolucion
+        return laEvolucion
     }
 
     override fun onStart() {
