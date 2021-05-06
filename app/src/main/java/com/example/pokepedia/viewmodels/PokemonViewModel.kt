@@ -33,6 +33,7 @@ class PokemonViewModel: ViewModel() {
 
       service = retrofit.create(Service::class.java)
     }
+
     fun ListeLosPokemon(offset: String) {
         service.getPokemonList("100",offset)
             .enqueue(object : Callback<PokemonResponse> {

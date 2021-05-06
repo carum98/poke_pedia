@@ -19,6 +19,7 @@ class AdaptadorPrincipal() : RecyclerView.Adapter<AdaptadorPrincipal.ViewHolder>
             field = value
             notifyDataSetChanged()
         }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_principal, parent, false)
@@ -52,7 +53,7 @@ class AdaptadorPrincipal() : RecyclerView.Adapter<AdaptadorPrincipal.ViewHolder>
     override fun getItemCount(): Int = losPokemones.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val urlView: TextView = view.findViewById(R.id.url)
+        val urlView: TextView = view.findViewById(R.id.urlMain)
         val contentView: TextView = view.findViewById(R.id.content)
 
         override fun toString(): String {
