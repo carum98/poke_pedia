@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.pokepedia.R
 import com.example.pokepedia.fragments.ListaPrincipalFragmentDirections
 
@@ -29,19 +30,19 @@ class AdaptadorPrincipal() : RecyclerView.Adapter<AdaptadorPrincipal.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
        val item = losPokemones[position]
-       holder.urlView.text = item.url
-       holder.contentView.text = item.name
-//        Glide.with(holder.itemView.context)
-//            .load(item.fotoURL)
-//            .circleCrop()
-//            .into(holder.itemView.findViewById(R.id.laFotoDelPokemon))
 
-        //val action = LoginFragmentDirections.actionLoginFragmentToDetailFragment(
-          //      User("Heriberto", "Urena")
-           //)
+        item.id = item.url.split('/')[6]
+
+        holder.urlView.text = item.url
+        holder.contentView.text = item.name
+        holder.idView.text = item.id
+
+        Glide.with(holder.itemView.context)
+            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png")
+            .circleCrop()
+            .into(holder.itemView.findViewById(R.id.laFotoDelPokemon))
 
         holder.itemView.setOnClickListener {
-//            var  elIdDelPokemon =   holder.idView.text.toString().toInt()
             var action = ListaPrincipalFragmentDirections.actionListaPrincipalFragmentToDetailFragment(
                 losPokemones[position]
             )
@@ -55,6 +56,7 @@ class AdaptadorPrincipal() : RecyclerView.Adapter<AdaptadorPrincipal.ViewHolder>
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val urlView: TextView = view.findViewById(R.id.urlMain)
         val contentView: TextView = view.findViewById(R.id.content)
+        val idView: TextView = view.findViewById(R.id.idMain)
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"

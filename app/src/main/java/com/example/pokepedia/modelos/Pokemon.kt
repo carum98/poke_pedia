@@ -2,11 +2,13 @@ package com.example.pokepedia.modelos
 
 import android.os.Parcel
 import android.os.Parcelable
-data class Pokemon (
+data class Pokemon(
+    var id: String,
     val name: String,
     val url: String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: ""
     ) {
