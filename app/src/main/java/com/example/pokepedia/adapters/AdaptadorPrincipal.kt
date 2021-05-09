@@ -11,9 +11,13 @@ import com.example.pokepedia.R
 import com.example.pokepedia.fragments.ListaPrincipalFragmentDirections
 
 import com.example.pokepedia.modelos.Pokemon
+import com.example.pokepedia.widgets.EmptyView
 
-class AdaptadorPrincipal() : RecyclerView.Adapter<AdaptadorPrincipal.ViewHolder>() {
+abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    abstract fun bind(item: T)
+}
 
+class AdaptadorPrincipal() : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     var losPokemones: List<Pokemon> = emptyList()
         set(value) {
@@ -21,45 +25,70 @@ class AdaptadorPrincipal() : RecyclerView.Adapter<AdaptadorPrincipal.ViewHolder>
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_principal, parent, false)
-        return ViewHolder(view)
+    companion object {
+        private const val VIEW_TYPE_EMPTY = 0
+        private const val VIEW_TYPE_ITEM = 1
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.fragment_principal, parent, false)
 
-       val item = losPokemones[position]
-
-        item.id = item.url.split('/')[6]
-
-        holder.urlView.text = item.url
-        holder.contentView.text = item.name
-        holder.idView.text = item.id
-
-        Glide.with(holder.itemView.context)
-            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png")
-            .circleCrop()
-            .into(holder.itemView.findViewById(R.id.laFotoDelPokemon))
-
-        holder.itemView.setOnClickListener {
-            var action = ListaPrincipalFragmentDirections.actionListaPrincipalFragmentToDetailFragment(
-                losPokemones[position]
-            )
-            holder.itemView.findNavController().navigate(action)
+        return when (viewType) {
+            VIEW_TYPE_EMPTY -> EmptyViewHolder(view)
+            VIEW_TYPE_ITEM -> ViewHolder(view)
+            else -> throw IllegalArgumentException("Invalid view type")
         }
+    }
 
+
+    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
+        when (holder) {
+            is EmptyViewHolder -> holder.bind("No hay pokemons")
+            is ViewHolder -> holder.bind(losPokemones[position])
+            else -> throw IllegalArgumentException("Invalid ViewHolder")
+        }
     }
 
     override fun getItemCount(): Int = losPokemones.size
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val urlView: TextView = view.findViewById(R.id.urlMain)
-        val contentView: TextView = view.findViewById(R.id.content)
-        val idView: TextView = view.findViewById(R.id.idMain)
+    override fun getItemViewType(position: Int): Int = if (losPokemones.count() == 0) {
+        VIEW_TYPE_EMPTY
+    } else {
+        VIEW_TYPE_ITEM
+    }
 
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+    inner class ViewHolder(view: View) : BaseViewHolder<Pokemon>(view) {
+        private val urlView: TextView = view.findViewById(R.id.urlMain)
+        private val contentView: TextView = view.findViewById(R.id.content)
+        private val idView: TextView = view.findViewById(R.id.idMain)
+
+        override fun bind(item: Pokemon) {
+            item.id = item.url.split('/')[6]
+
+            urlView.text = item.url
+            contentView.text = item.name
+            idView.text = item.id
+
+            Glide.with(itemView.context)
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png")
+                .circleCrop()
+                .into(itemView.findViewById(R.id.laFotoDelPokemon))
+
+            itemView.setOnClickListener {
+                val action = ListaPrincipalFragmentDirections.actionListaPrincipalFragmentToDetailFragment(
+                    item
+                )
+                itemView.findNavController().navigate(action)
+            }
+        }
+    }
+
+    inner class EmptyViewHolder(view: View) : BaseViewHolder<String>(view) {
+//        private val empty: EmptyView = itemView.findViewById(R.id.empty_list)
+
+        override fun bind(item: String) {
+//            empty.visibility = View.VISIBLE
         }
     }
 }
