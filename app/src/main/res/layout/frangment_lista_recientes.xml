@@ -12,5 +12,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/empty_fav"/>
+        app:title="@string/empty_resent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
