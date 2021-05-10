@@ -17,40 +17,33 @@ import retrofit2.Response
 
 class PokemonViewModel: ViewModel() {
     private val pokemonList = MutableLiveData<List<Pokemon>>()
-   private var service: Service
+    private var service: Service
 
     init {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-      val interceptor = HttpLoggingInterceptor()
-      interceptor.level = HttpLoggingInterceptor.Level.BODY
-      val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-
-      val retrofit = Retrofit.Builder()
-          .client(client)
+        val retrofit = Retrofit.Builder()
+            .client(client)
             .baseUrl(BuildConfig.BASEURL)
-          .addConverterFactory(GsonConverterFactory.create())
-          .build()
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-      service = retrofit.create(Service::class.java)
+        service = retrofit.create(Service::class.java)
     }
 
-    fun ListeLosPokemon(offset: String) {
-        service.getPokemonList("100",offset)
+    fun requestPokemon() {
+        service.getPokemonList("100","0")
             .enqueue(object : Callback<PokemonResponse> {
-                override fun onResponse(
-                    call: Call<PokemonResponse>,
-                    response: Response<PokemonResponse>
-                ) {
+                override fun onResponse(call: Call<PokemonResponse>, response: Response<PokemonResponse>) {
                     response.body()?.let {
-                        // TODO: Cuando el request se completa, notificamos a los suscriptores
                         pokemonList.postValue(it.pokemos)
                     }
                 }
-
                 override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
                     val a = ""
                 }
-
             })
     }
 
