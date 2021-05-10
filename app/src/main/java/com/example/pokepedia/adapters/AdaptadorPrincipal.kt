@@ -59,16 +59,12 @@ class AdaptadorPrincipal() : RecyclerView.Adapter<BaseViewHolder<*>>() {
     }
 
     inner class ViewHolder(view: View) : BaseViewHolder<Pokemon>(view) {
-        private val urlView: TextView = view.findViewById(R.id.urlMain)
         private val contentView: TextView = view.findViewById(R.id.content)
-        private val idView: TextView = view.findViewById(R.id.idMain)
 
         override fun bind(item: Pokemon) {
             item.id = item.url.split('/')[6]
 
-            urlView.text = item.url
             contentView.text = item.name
-            idView.text = item.id
 
             Glide.with(itemView.context)
                 .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png")
