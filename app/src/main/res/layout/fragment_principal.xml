@@ -12,6 +12,7 @@
         android:id="@+id/laFotoDelPokemon"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:paddingHorizontal="15dp"
         app:srcCompat="@drawable/pokemon_empty" />
 
     <TextView

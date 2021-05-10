@@ -34,7 +34,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.laDescripcion.text = pokemon.url
 
         Glide.with(view.context)
-            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png")
+            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png")
             .into(binding.elPokenon)
 
         return view

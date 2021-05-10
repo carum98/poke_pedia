@@ -67,7 +67,7 @@ class AdaptadorPrincipal() : RecyclerView.Adapter<BaseViewHolder<*>>() {
             contentView.text = item.name
 
             Glide.with(itemView.context)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png")
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png")
                 .circleCrop()
                 .into(itemView.findViewById(R.id.laFotoDelPokemon))
 
