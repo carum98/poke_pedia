@@ -1,5 +1,6 @@
 package com.example.pokepedia.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,13 +39,52 @@ class PokemonViewModel: ViewModel() {
             .enqueue(object : Callback<PokemonResponse> {
                 override fun onResponse(call: Call<PokemonResponse>, response: Response<PokemonResponse>) {
                     response.body()?.let {
-                        pokemonList.postValue(it.pokemos)
+                        pokemonList.postValue(it.pokemos.onEach {
+                                elPokemon->
+                            elPokemon.id= elPokemon.url.split("/")[6]
+                            elPokemon.urlImagen = "${BuildConfig.URLIMAGENPOKEMON}${elPokemon.id}.png"
+                        })
                     }
                 }
                 override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
                     val a = ""
                 }
             })
+    }
+    fun getPokemon(elPokemon:String){
+
+        var elLlamado =   service.getPokemon(elPokemon)
+        elLlamado.enqueue(object : Callback<Pokemon> {
+            override fun onFailure(call: Call<Pokemon>, t: Throwable) {
+                val a = ""
+                Log.d("FAllo","Uno")
+            }
+            override fun onResponse(
+                call: Call<Pokemon>,
+                response: Response<Pokemon>
+            ) {
+
+                if(response.isSuccessful){
+                    response.body()?.let {
+                        // TODO: Cuando el request se completa, notificamos a los suscriptores
+                        pokemonList.postValue(listOf(it).onEach {
+                                elPokemon->
+                            elPokemon.urlImagen = "${BuildConfig.URLIMAGENPOKEMON}${elPokemon.id}.png"
+                        })
+                    }
+                }else{
+                    Log.d("FAllo","Uno")
+                    pokemonList.postValue(listOf())
+                }
+
+            }
+
+
+
+        }
+        )
+
+
     }
 
     fun getPokemonList(): LiveData<List<Pokemon>> {

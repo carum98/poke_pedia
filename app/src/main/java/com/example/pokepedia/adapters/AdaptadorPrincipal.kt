@@ -8,16 +8,15 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.pokepedia.R
+import com.example.pokepedia.databinding.FragmentPrincipalBinding
 import com.example.pokepedia.fragments.ListaPrincipalFragmentDirections
 
 import com.example.pokepedia.modelos.Pokemon
 import com.example.pokepedia.widgets.EmptyView
 
-abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    abstract fun bind(item: T)
-}
 
-class AdaptadorPrincipal() : RecyclerView.Adapter<BaseViewHolder<*>>() {
+
+class AdaptadorPrincipal : RecyclerView.Adapter<AdaptadorPrincipal.ListaPrincipalViewHolder>() {
 
     var losPokemones: List<Pokemon> = emptyList()
         set(value) {
@@ -25,66 +24,35 @@ class AdaptadorPrincipal() : RecyclerView.Adapter<BaseViewHolder<*>>() {
             notifyDataSetChanged()
         }
 
-    companion object {
-        private const val VIEW_TYPE_EMPTY = 0
-        private const val VIEW_TYPE_ITEM = 1
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListaPrincipalViewHolder {
+        val binding = FragmentPrincipalBinding.inflate(
+            LayoutInflater.from(parent.context),parent,false)
+        return ListaPrincipalViewHolder(binding)
     }
+    inner class ListaPrincipalViewHolder(private val binding:FragmentPrincipalBinding):
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(pokemon:Pokemon){
+            binding.content.text = pokemon.name
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_principal, parent, false)
+           Glide.with(binding.laFotoDelPokemon.context)
+                .load(pokemon.urlImagen)
+                .circleCrop()
+                .into(binding.laFotoDelPokemon)
 
-        return when (viewType) {
-            VIEW_TYPE_EMPTY -> EmptyViewHolder(view)
-            VIEW_TYPE_ITEM -> ViewHolder(view)
-            else -> throw IllegalArgumentException("Invalid view type")
-        }
-    }
-
-
-    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        when (holder) {
-            is EmptyViewHolder -> holder.bind("No hay pokemons")
-            is ViewHolder -> holder.bind(losPokemones[position])
-            else -> throw IllegalArgumentException("Invalid ViewHolder")
+            binding.elItemDelPrincipal.setOnClickListener {
+                var action = ListaPrincipalFragmentDirections.actionListaPrincipalFragmentToDetailFragment(
+                    pokemon
+                )
+                binding.content.findNavController().navigate(action)
+            }
         }
     }
 
     override fun getItemCount(): Int = losPokemones.size
 
-    override fun getItemViewType(position: Int): Int = if (losPokemones.count() == 0) {
-        VIEW_TYPE_EMPTY
-    } else {
-        VIEW_TYPE_ITEM
+    override fun onBindViewHolder(holder: ListaPrincipalViewHolder, position: Int) {
+        holder.bind(losPokemones[position])
     }
 
-    inner class ViewHolder(view: View) : BaseViewHolder<Pokemon>(view) {
-        private val contentView: TextView = view.findViewById(R.id.content)
-
-        override fun bind(item: Pokemon) {
-            item.id = item.url.split('/')[6]
-
-            contentView.text = item.name
-
-            Glide.with(itemView.context)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png")
-                .circleCrop()
-                .into(itemView.findViewById(R.id.laFotoDelPokemon))
-
-            itemView.setOnClickListener {
-                val action = ListaPrincipalFragmentDirections.actionListaPrincipalFragmentToDetailFragment(
-                    item
-                )
-                itemView.findNavController().navigate(action)
-            }
-        }
-    }
-
-    inner class EmptyViewHolder(view: View) : BaseViewHolder<String>(view) {
-//        private val empty: EmptyView = itemView.findViewById(R.id.empty_list)
-
-        override fun bind(item: String) {
-//            empty.visibility = View.VISIBLE
-        }
-    }
 }
