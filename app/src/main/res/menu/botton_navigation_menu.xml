@@ -6,7 +6,7 @@
         android:title="@string/favoritos"
         android:icon="@drawable/ic_favorite"
         app:showAsAction="ifRoom|withText"/>
-    <item android:id="@+id/itemFragment3"
+    <item android:id="@+id/listaRecientesFragment"
         android:title="@string/recientes"
         android:icon="@drawable/ic_recent"
         app:showAsAction="ifRoom|withText"/>

@@ -13,5 +13,6 @@
     <string name="logo">Logo</string>
     <string name="pokemon">Pokemon</string>
     <string name="description_empty_image">empty_image</string>
-    <string name="empty_text">No hay pokemos</string>
+    <string name="empty_fav">No tiene pokemons favoritos</string>
+    <string name="empty_resent">No tiene pokemons recientes</string>
 </resources>
