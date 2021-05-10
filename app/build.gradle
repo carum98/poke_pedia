@@ -24,9 +24,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASEURL", '"https://pokeapi.co/api/v2/"')
+            buildConfigField("String", "URLIMAGENPOKEMON", '"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"')
+
         }
         debug {
             buildConfigField("String", "BASEURL", '"https://pokeapi.co/api/v2/"')
+            buildConfigField("String", "URLIMAGENPOKEMON", '"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"')
         }
     }
     compileOptions {
@@ -60,5 +63,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    //RX JAVA
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.3'
+    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 
 }

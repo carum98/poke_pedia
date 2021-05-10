@@ -5,18 +5,22 @@ import android.os.Parcelable
 data class Pokemon(
     var id: String,
     val name: String,
-    val url: String
+    val url: String,
+    var urlImagen: String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: ""
+        parcel.readString()?:"",
+        parcel.readString()?:"",
+        parcel.readString()?:"",
+        parcel.readString()?:""
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(name)
         parcel.writeString(url)
+        parcel.writeString(urlImagen)
     }
 
     override fun describeContents(): Int {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EmptyViewInfo">
+        <attr name="titleFragment" format="string" />
+        <attr name="imagen" format="integer" />
+    </declare-styleable>
+</resources>

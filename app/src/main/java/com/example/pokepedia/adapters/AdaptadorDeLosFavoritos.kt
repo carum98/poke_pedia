@@ -43,7 +43,7 @@ class AdaptadorDeLosFavoritos(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val idView: TextView = view.findViewById(R.id.url)
-        val contentView: TextView = view.findViewById(R.id.content)
+        val contentView: TextView = view.findViewById(R.id.pokemonName)
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"

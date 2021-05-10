@@ -14,18 +14,19 @@ import com.example.pokepedia.R
 import com.example.pokepedia.databinding.FragmentDetailBinding
 import com.example.pokepedia.databinding.FragmentHomeBinding
 import com.example.pokepedia.modelos.Pokemon
+import com.example.pokepedia.widgets.EmptyView
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
     private val losArgumentos: DetailFragmentArgs by navArgs()
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-    private lateinit var losPokemonesCompletos: List<Pokemon>
+//    private lateinit var losPokemonesCompletos: List<Pokemon>
     private lateinit  var elPokemonActual: Pokemon
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        losPokemonesCompletos=obtenerLosPokemonesIniciales()
+        elPokemonActual=losArgumentos.pokemon
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,12 +35,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        elPokemonActual= losPokemonesCompletos.first {it.id==losArgumentos.pokemon.id }
-//        binding.elNombre.text = elPokemonActual.nombre
-//        binding.laDescripcion.text =elPokemonActual.descripcion
-//        var laEvolucion: Pokemon = GestioneLaEvolucion()
-//        Glide.with(binding.elPokenon.context)
-//            .load(losArgumentos.pokemon.fotoURL)
-//            .into(binding.elPokenon)
+        binding.elNombre.text = elPokemonActual.name
+//            binding.laDescripcion.text =elPokemonActual.descripcion
+     //   var laEvolucion: Pokemon = GestioneLaEvolucion()
+        Glide.with(binding.elPokenon.context)
+            .load(elPokemonActual.urlImagen)
+            .into(binding.elPokenon)
 //        binding.Evolucion.setOnClickListener{
 //            var action = DetailFragmentDirections.actiondetailfragmentself(laEvolucion)
 //            binding.root.findNavController().navigate(action)
@@ -61,14 +62,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 //     return laEvolucion
 //    }
 
-    override fun onStart() {
-//        losPokemonesCompletos=obtenerLosPokemonesIniciales()
-        super.onStart()
-    }
-    override fun onResume() {
-//        losPokemonesCompletos=obtenerLosPokemonesIniciales()
-        super.onResume()
-    }
+//    override fun onStart() {
+////        losPokemonesCompletos=obtenerLosPokemonesIniciales()
+//        super.onStart()
+//    }
+//    override fun onResume() {
+////        losPokemonesCompletos=obtenerLosPokemonesIniciales()
+//        super.onResume()
+//    }
 
 //    private  fun obtenerLosPokemonesIniciales() : List<Pokemon> {
 //        return mutableListOf(

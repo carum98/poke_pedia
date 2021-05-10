@@ -1,15 +1,19 @@
 package com.example.pokepedia.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.pokepedia.BuildConfig
+import com.example.pokepedia.databinding.FragmentListaPrincipalBinding
 import com.example.pokepedia.modelos.Pokemon
 import com.example.pokepedia.modelos.PokemonResponse
 import com.example.pokepedia.service.Service
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
+import okhttp3.internal.wait
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,7 +31,7 @@ class PokemonViewModel: ViewModel() {
 
       val retrofit = Retrofit.Builder()
           .client(client)
-            .baseUrl(BuildConfig.BASEURL)
+           .baseUrl(BuildConfig.BASEURL)
           .addConverterFactory(GsonConverterFactory.create())
           .build()
 
@@ -43,7 +47,11 @@ class PokemonViewModel: ViewModel() {
                 ) {
                     response.body()?.let {
                         // TODO: Cuando el request se completa, notificamos a los suscriptores
-                        pokemonList.postValue(it.pokemos)
+                        pokemonList.postValue(it.pokemos.onEach {
+                                elPokemon->
+                                    elPokemon.id= elPokemon.url.split("/")[6]
+                                    elPokemon.urlImagen = "${BuildConfig.URLIMAGENPOKEMON}${elPokemon.id}.png"
+                        })
                     }
                 }
 
@@ -52,6 +60,41 @@ class PokemonViewModel: ViewModel() {
                 }
 
             })
+    }
+    fun getPokemon(elPokemon:String){
+
+        var elLlamado =   service.getPokemon(elPokemon)
+        elLlamado.enqueue(object : Callback<Pokemon> {
+             override fun onFailure(call: Call<Pokemon>, t: Throwable) {
+                 val a = ""
+                 Log.d("FAllo","Uno")
+             }
+             override fun onResponse(
+                 call: Call<Pokemon>,
+                 response: Response<Pokemon>
+             ) {
+
+                 if(response.isSuccessful){
+                     response.body()?.let {
+                         // TODO: Cuando el request se completa, notificamos a los suscriptores
+                         pokemonList.postValue(listOf(it).onEach {
+                                 elPokemon->
+                             elPokemon.urlImagen = "${BuildConfig.URLIMAGENPOKEMON}${elPokemon.id}.png"
+                         })
+                     }
+                 }else{
+                     Log.d("FAllo","Uno")
+                     pokemonList.postValue(listOf())
+                 }
+
+             }
+
+
+
+         }
+         )
+
+
     }
 
     fun getPokemonList(): LiveData<List<Pokemon>> {

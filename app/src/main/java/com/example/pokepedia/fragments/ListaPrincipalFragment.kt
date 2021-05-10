@@ -1,6 +1,7 @@
 package com.example.pokepedia.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,11 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.pokepedia.adapters.AdaptadorPrincipal
-import com.example.pokepedia.R
-import com.example.pokepedia.modelos.Pokemon
+import com.example.pokepedia.databinding.FragmentListaPrincipalBinding
 import com.example.pokepedia.viewmodels.PokemonViewModel
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.textChanges
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import java.util.concurrent.TimeUnit
 
 /**
  * A fragment representing a list of Items.
@@ -20,11 +26,12 @@ import com.example.pokepedia.viewmodels.PokemonViewModel
 class ListaPrincipalFragment : Fragment() {
 
     private val viewModel: PokemonViewModel by viewModels()
-    private  val adaptador = AdaptadorPrincipal()
-
+    private  val elAdaptador=AdaptadorPrincipal()
+    private var _binding: FragmentListaPrincipalBinding? = null
+    private val binding get() = _binding!!
+    private val disposable = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel.ListeLosPokemon("0")
     }
 
@@ -32,34 +39,63 @@ class ListaPrincipalFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_lista_principal, container, false)
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-
-                view.adapter = adaptador
-
-                viewModel.getPokemonList().observe(viewLifecycleOwner) {
-                  adaptador.losPokemones = it
-                }
-            }
+        _binding = FragmentListaPrincipalBinding.inflate(inflater, container, false)
+        viewModel.getPokemonList().observe(viewLifecycleOwner) {
+            elAdaptador.losPokemones = it
+            binding.viewRecicler.adapter=elAdaptador
         }
-        return view
+      /*  binding.botonMostrar.setOnClickListener {
+            Log.d("Estoy adentro","elAppPokeIRvin")
+            MostrarResultadoFallido()
+        }*/
+        return binding.root
     }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ListaPrincipalFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposable.clear()
+        _binding = null
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        disposable.add(
+            binding.txtBusqueda.textChanges()
+                .skipInitialValue()
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .map { it.toString() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    binding.textInputLayout.error = if (it.isEmpty()) "Campo requerido" else null
                 }
-            }
+        )
+
+
+        disposable.add(
+            binding.searchButton.clicks()
+                .subscribe {
+                    viewModel.getPokemon(binding.txtBusqueda.text.toString())
+                    viewModel.getPokemonList().observe(viewLifecycleOwner) {
+                        MostrarResultado (it.isEmpty())
+                    }
+
+
+
+                }
+        )
+
+
     }
+    private fun MostrarResultado(seDebeMostrar:Boolean) {
+        if(!seDebeMostrar){
+            binding.busquedaFallida1.visibility = View.GONE
+                binding.viewRecicler.visibility =View.VISIBLE
+        }else{
+            binding.busquedaFallida1.visibility = View.VISIBLE
+            binding.viewRecicler.visibility =View.GONE
+        }
+     /*   binding.busquedaFallida1.visibility =
+            if (binding.busquedaFallida1.isVisible) View.GONE else View.VISIBLE
+        binding.viewRecicler.visibility =
+            if (binding.viewRecicler.isVisible) View.GONE else View.VISIBLE*/
+    }
+
 }
