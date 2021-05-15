@@ -42,7 +42,7 @@ class PokemonViewModel: ViewModel() {
                         pokemonList.postValue(it.pokemos.onEach {
                                 elPokemon->
                             elPokemon.id= elPokemon.url.split("/")[6]
-                            elPokemon.urlImagen = "${BuildConfig.URLIMAGENPOKEMON}${elPokemon.id}.png"
+                            elPokemon.urlImagen =    "${BuildConfig.URLIMAGENPOKEMON}${elPokemon.id}.png"
                         })
                     }
                 }
@@ -51,6 +51,7 @@ class PokemonViewModel: ViewModel() {
                 }
             })
     }
+
     fun getPokemon(elPokemon:String){
 
         var elLlamado =   service.getPokemon(elPokemon)

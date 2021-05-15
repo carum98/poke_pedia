@@ -75,6 +75,8 @@ class ListaPrincipalFragment : Fragment() {
                         MostrarResultado (it.isEmpty())
                     }
 
+
+
                 }
         )
 

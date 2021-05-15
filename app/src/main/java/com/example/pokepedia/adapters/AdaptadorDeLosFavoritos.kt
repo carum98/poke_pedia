@@ -6,47 +6,48 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.pokepedia.R
+import com.example.pokepedia.databinding.FragmentFavoritosBinding
+import com.example.pokepedia.databinding.FragmentPrincipalBinding
 import com.example.pokepedia.fragments.ListaDeFavoritosFragmentDirections
+import com.example.pokepedia.fragments.ListaPrincipalFragmentDirections
 
 import com.example.pokepedia.modelos.Pokemon
 
-class AdaptadorDeLosFavoritos(
-    private val losPokemonesFavoritos: List<Pokemon>
-) : RecyclerView.Adapter<AdaptadorDeLosFavoritos.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_favoritos, parent, false)
-        return ViewHolder(view)
+class AdaptadorDeLosFavoritos
+: RecyclerView.Adapter<AdaptadorDeLosFavoritos.ListaFavoritosViewHolder>() {
+    var losPokemones: List<Pokemon> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListaFavoritosViewHolder {
+        val binding = FragmentFavoritosBinding.inflate(
+            LayoutInflater.from(parent.context),parent,false)
+        return ListaFavoritosViewHolder(binding)
     }
+    inner class ListaFavoritosViewHolder(private val binding: FragmentFavoritosBinding):
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(pokemon:Pokemon){
+            binding.content.text = pokemon.name
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val item = losPokemonesFavoritos[position]
-//        holder.idView.text = item.id.toString()
-//        holder.contentView.text = item.nombre
-//        Glide.with(holder.itemView.context)
-//                .load(item.fotoURL)
-//                .circleCrop()
-//                .into(holder.itemView.findViewById(R.id.laFotoDelPokemon))
+            Glide.with(binding.laFotoDelPokemon.context)
+                .load(pokemon.urlImagen)
+                .circleCrop()
+                .into(binding.laFotoDelPokemon)
 
-        holder.itemView.setOnClickListener {
-            var action = ListaDeFavoritosFragmentDirections.actionListaDeFavoritosFragmentToDetailFragment(
-                losPokemonesFavoritos[position]
-            )
-            holder.itemView.findNavController().navigate(action)
-//            holder.itemView.findNavController().navigate(R.id.action_itemFragment2_to_detailFragment)
+            binding.elItemDeFavoritos.setOnClickListener {
+                var action = ListaDeFavoritosFragmentDirections.actionListaDeFavoritosFragmentToDetailFragment(
+                    pokemon
+                )
+                binding.content.findNavController().navigate(action)
+            }
         }
     }
+    override fun getItemCount(): Int = losPokemones.size
 
-    override fun getItemCount(): Int = losPokemonesFavoritos.size
-
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val idView: TextView = view.findViewById(R.id.url)
-        val contentView: TextView = view.findViewById(R.id.content)
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }
+    override fun onBindViewHolder(holder: AdaptadorDeLosFavoritos.ListaFavoritosViewHolder, position: Int) {
+        holder.bind(losPokemones[position])
     }
 }
