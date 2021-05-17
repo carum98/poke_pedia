@@ -20,7 +20,7 @@ class PokemonDetailViewModel(application:Application): AndroidViewModel(applicat
         return repository.getFavoritePokemonByName(nombre)
     }
     fun insertFavoritePokemon(pokemon:PokemonEntity){
-            repository.insertPokemonFavorito(pokemon)
+        repository.insertPokemonFavorito(pokemon)
     }
     fun deleteFavoritePokemon(idApi:String){
         repository.deleteFavoritePokemon(idApi)
