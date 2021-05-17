@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
  * A fragment representing a list of Items.
  */
 class ListaDeFavoritosFragment : Fragment() {
-   private val viewModel: PokemonViewModel by viewModels()
+//   private val viewModel: PokemonViewModel by viewModels()
     private  val adapter = AdaptadorDeLosFavoritos()
 
     private var _binding: FragmentListaFavoritosBinding? = null
@@ -40,9 +40,6 @@ class ListaDeFavoritosFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
-
         _binding = FragmentListaFavoritosBinding.inflate(inflater, container, false)
         val view = binding.root
 

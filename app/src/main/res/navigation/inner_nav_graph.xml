@@ -39,5 +39,9 @@
         android:id="@+id/listaRecientesFragment"
         android:name="com.example.pokepedia.fragments.ListaRecientesFragment"
         android:label="ListaRecientesFragment"
-        tools:layout="@layout/frangment_lista_recientes"/>
+        tools:layout="@layout/frangment_lista_recientes">
+        <action
+            android:id="@+id/action_listaRecientesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>
