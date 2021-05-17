@@ -39,9 +39,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png")
             .into(binding.elPokenon)
 //        val viewModel = PokemonViewModel()
-
-
-
         return view
     }
 
