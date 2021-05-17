@@ -39,18 +39,14 @@
         android:id="@+id/listaRecientesFragment"
         android:name="com.example.pokepedia.fragments.ListaRecientesFragment"
         android:label="ListaRecientesFragment"
-<<<<<<< HEAD
-        tools:layout="@layout/frangment_lista_recientes"/>
-    <fragment
-        android:id="@+id/userFragment"
-        android:name="com.example.pokepedia.fragments.UserFragment"
-        android:label="fragment_user"
-        tools:layout="@layout/fragment_user" />
-=======
         tools:layout="@layout/frangment_lista_recientes">
         <action
             android:id="@+id/action_listaRecientesFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
->>>>>>> 1923ae171afe61df674d860dc55b25e3b1c2d1e9
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.pokepedia.fragments.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" />
 </navigation>
