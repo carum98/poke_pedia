@@ -44,7 +44,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 viewModelLogin.insertUser(user)
             }
 
-            findNavController().navigate(R.id.action_loginFragment2_to_homeFragment3)
+            findNavController().popBackStack()
         }
 
     }

@@ -7,6 +7,10 @@ import com.example.pokepedia.db.emtities.UserEntity
 class UserRepository(context: Context) {
     private  val db: DataBase = DataBase.getDatabase(context)
 
+    fun getUser() : UserEntity {
+        return db.userDAO().getUser()
+    }
+
     fun findUser(user: UserEntity) : UserEntity {
         return db.userDAO().findUser(user.name, user.gender)
     }
