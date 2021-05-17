@@ -1,6 +1,7 @@
 package com.example.pokepedia.service
 
 import com.example.pokepedia.modelos.Pokemon
+import com.example.pokepedia.modelos.PokemonDetail
 import com.example.pokepedia.modelos.PokemonResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -17,4 +18,8 @@ interface Service {
     fun getPokemon(
         @Path("pokemon")  elPokemon: String? = null,
     ): Call<Pokemon>
+    @GET("pokemon-species/{id}")
+    fun getPokemonDetail(
+        @Path("id") elPokemon: String? = null,
+    ): Call<PokemonDetail>
 }

@@ -19,3 +19,5 @@ data class PokemonEntity(
 ){
     @PrimaryKey(autoGenerate = true) var identificador: Int=0
 }
+
+

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pokepedia.BuildConfig
 import com.example.pokepedia.modelos.Pokemon
+import com.example.pokepedia.modelos.PokemonDetail
 import com.example.pokepedia.modelos.PokemonResponse
 import com.example.pokepedia.service.Service
 import retrofit2.Retrofit
@@ -18,6 +19,7 @@ import retrofit2.Response
 
 class PokemonViewModel: ViewModel() {
     private val pokemonList = MutableLiveData<List<Pokemon>>()
+    private val pokemonDetail = MutableLiveData<PokemonDetail>()
     private var service: Service
 
     init {
@@ -53,7 +55,6 @@ class PokemonViewModel: ViewModel() {
     }
 
     fun getPokemon(elPokemon:String){
-
         var elLlamado =   service.getPokemon(elPokemon)
         elLlamado.enqueue(object : Callback<Pokemon> {
             override fun onFailure(call: Call<Pokemon>, t: Throwable) {
@@ -64,7 +65,6 @@ class PokemonViewModel: ViewModel() {
                 call: Call<Pokemon>,
                 response: Response<Pokemon>
             ) {
-
                 if(response.isSuccessful){
                     response.body()?.let {
                         // TODO: Cuando el request se completa, notificamos a los suscriptores
@@ -77,18 +77,29 @@ class PokemonViewModel: ViewModel() {
                     Log.d("FAllo","Uno")
                     pokemonList.postValue(listOf())
                 }
-
             }
-
-
-
-        }
-        )
-
-
+        })
     }
 
     fun getPokemonList(): LiveData<List<Pokemon>> {
         return pokemonList
+    }
+
+    fun getPokemonDetail(elPokemon:String){
+        service.getPokemonDetail(elPokemon)
+            .enqueue(object : Callback<PokemonDetail>{
+                override fun onResponse(call: Call<PokemonDetail>, response: Response<PokemonDetail>) {
+                    response.body()?.let {
+                        pokemonDetail.postValue(it)
+                    }
+                }
+                override fun onFailure(call: Call<PokemonDetail>, t: Throwable) {
+                    val a = ""
+                }
+            })
+    }
+
+    fun getDataPokemonDetail(): LiveData<PokemonDetail> {
+        return pokemonDetail
     }
 }

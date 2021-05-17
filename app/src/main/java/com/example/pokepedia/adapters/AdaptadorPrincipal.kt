@@ -33,7 +33,7 @@ class AdaptadorPrincipal : RecyclerView.Adapter<AdaptadorPrincipal.ListaPrincipa
     inner class ListaPrincipalViewHolder(private val binding:FragmentPrincipalBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bind(pokemon:Pokemon){
-            binding.content.text = pokemon.name
+            binding.content.text = pokemon.name.capitalize()
 
            Glide.with(binding.laFotoDelPokemon.context)
                 .load(pokemon.urlImagen)
