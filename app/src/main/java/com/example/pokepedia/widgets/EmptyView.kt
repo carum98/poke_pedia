@@ -20,7 +20,7 @@ class EmptyView @JvmOverloads constructor(
             defStyleRes
         )
 
-        binding.textView.text = typedArray.getString(R.styleable.EmptyView_title)
+        binding.textoImagenEmpty.text = typedArray.getString(R.styleable.EmptyView_title)
         binding.imagenPrincipalEmpty.setImageResource(
             typedArray.getResourceId(R.styleable.EmptyView_imagen,
                 R.drawable.pokemo_no_encontrado)

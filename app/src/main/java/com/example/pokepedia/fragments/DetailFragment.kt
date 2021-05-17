@@ -2,7 +2,6 @@ package com.example.pokepedia.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.CalendarContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.pokepedia.R
-import com.example.pokepedia.R.color.yellow
 import com.example.pokepedia.databinding.FragmentDetailBinding
 import com.example.pokepedia.db.entities.PokemonEntity
 import com.example.pokepedia.modelos.Pokemon
@@ -49,7 +47,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelDetail.getFavoritePokemonForId(pokemon.id).observe(viewLifecycleOwner) {
+        viewModelDetail.getFavoritePokemonById(pokemon.id).observe(viewLifecycleOwner) {
             isFavorite = (it != null)
             binding.btnFavorito.setOnClickListener {
                 var laEntidad = PokemonEntity(idApi = pokemon.id, nombre = pokemon.name)

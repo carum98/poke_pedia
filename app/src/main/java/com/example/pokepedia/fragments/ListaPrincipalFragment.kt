@@ -84,10 +84,10 @@ class ListaPrincipalFragment : Fragment() {
     }
     private fun MostrarResultado(seDebeMostrar:Boolean) {
         if(!seDebeMostrar){
-            binding.busquedaFallida1.visibility = View.GONE
+            binding.busquedaFallida.visibility = View.GONE
             binding.listRecyclerView.visibility =View.VISIBLE
         }else{
-            binding.busquedaFallida1.visibility = View.VISIBLE
+            binding.busquedaFallida.visibility = View.VISIBLE
             binding.listRecyclerView.visibility =View.GONE
         }
     }

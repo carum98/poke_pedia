@@ -11,7 +11,7 @@
     tools:context=".fragments.ListaPrincipalFragment">
 
     <com.example.pokepedia.widgets.EmptyView
-        android:id="@+id/busquedaFallida1"
+        android:id="@+id/busquedaFallida"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"

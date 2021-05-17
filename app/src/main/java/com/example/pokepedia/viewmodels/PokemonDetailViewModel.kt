@@ -13,8 +13,11 @@ class PokemonDetailViewModel(application:Application): AndroidViewModel(applicat
     fun getFavoritePokemon():LiveData<List<PokemonEntity>>{
         return  repository.getAllFavoritePokemon()
     }
-    fun getFavoritePokemonForId(id:String):LiveData<PokemonEntity>{
-        return repository.getFavoritePokemonForId(id)
+    fun getFavoritePokemonById(id:String):LiveData<PokemonEntity>{
+        return repository.getFavoritePokemonById(id)
+    }
+    fun getFavoritePokemonByName(nombre:String):LiveData<PokemonEntity>{
+        return repository.getFavoritePokemonByName(nombre)
     }
     fun insertFavoritePokemon(pokemon:PokemonEntity){
             repository.insertPokemonFavorito(pokemon)

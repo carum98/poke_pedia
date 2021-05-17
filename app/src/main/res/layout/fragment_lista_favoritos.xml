@@ -12,7 +12,7 @@
     tools:context=".fragments.ListaDeFavoritosFragment">
 
     <com.example.pokepedia.widgets.EmptyView
-        android:id="@+id/busquedaFallida1"
+        android:id="@+id/busquedaFallida"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
@@ -21,7 +21,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:title="@string/textBusquedaFallida" />
+        app:title="@string/textBusquedaFallidaFavoritos" />
+    <com.example.pokepedia.widgets.EmptyView
+        android:id="@+id/noHayPokemon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:imagen="@drawable/pokemon_empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:title="@string/empty_fav" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -54,17 +65,17 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listRecyclerView"
-        tools:listitem="@layout/fragment_favoritos"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:spanCount="3">
+
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:spanCount="3"
+        tools:listitem="@layout/fragment_favoritos">
 
     </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

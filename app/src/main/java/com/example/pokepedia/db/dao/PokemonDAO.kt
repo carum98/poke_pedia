@@ -15,6 +15,9 @@ interface PokemonDAO {
     @Query("Select  * from pokemon_favoritos where idApi=:id Limit 1")
     fun getFavoritePokemon(id:String): LiveData< PokemonEntity >
 
+    @Query("Select  * from pokemon_favoritos where nombre like  :nombreB  Limit 1")
+    fun getFavoritePokemonByName(nombreB:String): LiveData< PokemonEntity >
+
     @Insert
     fun insertPokemonFavorito(PokemonEntity: PokemonEntity)
 

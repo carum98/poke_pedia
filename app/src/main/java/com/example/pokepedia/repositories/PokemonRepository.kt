@@ -17,6 +17,6 @@ class PokemonRepository(context: Context) {
         db.pokemonDAO().deletePokemonFavorito(idApi)
     }
     fun getAllFavoritePokemon():LiveData<List<PokemonEntity>>  = db.pokemonDAO().getAllFavoritePokemon()
-    fun getFavoritePokemonForId(idApi:String):LiveData<PokemonEntity>  = db.pokemonDAO().getFavoritePokemon(idApi)
-
+    fun getFavoritePokemonById(idApi:String):LiveData<PokemonEntity>  = db.pokemonDAO().getFavoritePokemon(idApi)
+    fun getFavoritePokemonByName(name:String):LiveData<PokemonEntity>  = db.pokemonDAO().getFavoritePokemonByName(name)
 }
