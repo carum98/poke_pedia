@@ -8,7 +8,15 @@ import com.example.pokepedia.repositories.UserRepository
 class LoginViewModel(application: Application): AndroidViewModel(application) {
     val repository = UserRepository(application.applicationContext)
 
+    fun findUser(user: UserEntity) : UserEntity {
+        return repository.findUser(user);
+    }
+
     fun insertUser(user: UserEntity) {
         repository.insertUser(user);
+    }
+
+    fun updateUser(user: UserEntity) {
+        repository.updateUser(user)
     }
 }

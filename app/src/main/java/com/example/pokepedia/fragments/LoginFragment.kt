@@ -35,8 +35,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val gender = if(binding.gender.checkedRadioButtonId == R.id.male) "M" else "F"
 
             val user = UserEntity(name = name, gender = gender, isActive = true);
+            val userDB = viewModelLogin.findUser(user)
 
-            viewModelLogin.insertUser(user = user)
+            if (userDB != null) {
+                userDB.isActive = true
+                viewModelLogin.updateUser(userDB)
+            } else {
+                viewModelLogin.insertUser(user)
+            }
+
             findNavController().navigate(R.id.action_loginFragment2_to_homeFragment3)
         }
 
