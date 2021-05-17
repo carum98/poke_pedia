@@ -5,10 +5,14 @@ import androidx.lifecycle.AndroidViewModel
 import com.example.pokepedia.db.emtities.UserEntity
 import com.example.pokepedia.repositories.UserRepository
 
-class HomeViewModel(application: Application): AndroidViewModel(application) {
+class UserViewModel(application: Application): AndroidViewModel(application) {
     val repository = UserRepository(application.applicationContext)
 
     fun getUser() : UserEntity {
         return repository.getUser()
+    }
+
+    fun updateUser(user: UserEntity) {
+        repository.updateUser(user)
     }
 }

@@ -15,4 +15,8 @@
         android:title="@string/favoritos"
         android:icon="@drawable/ic_favorite"
         app:showAsAction="ifRoom|withText"/>
+    <item android:id="@+id/userFragment"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_baseline_account_circle"
+        app:showAsAction="ifRoom|withText"/>
 </menu>

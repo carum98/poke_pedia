@@ -1,5 +1,6 @@
 package com.example.pokepedia.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,15 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.pokepedia.R
 import com.example.pokepedia.databinding.FragmentHomeBinding
-import com.example.pokepedia.viewmodels.HomeViewModel
-import com.example.pokepedia.viewmodels.LoginViewModel
+import com.example.pokepedia.viewmodels.UserViewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private  val  viewModelHome: HomeViewModel by viewModels()
+    private  val  userModelHome: UserViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.bottomNavigationView.setupWithNavController(navControl)
 
-        val user = viewModelHome.getUser()
+        val user = userModelHome.getUser()
 
         if (user === null) {
             findNavController().navigate(R.id.action_homeFragment3_to_loginFragment2)

@@ -20,4 +20,6 @@
     <string name="HintNombrePokemon">El nombre del Pokemon </string>
     <string name="btnBuscar">Buscar</string>
     <string name="imagendetitulo">ImagenDetitulo</string>
+    <string name="profile">Perfil</string>
+    <string name="logout">Cerrar sesion</string>
 </resources>
