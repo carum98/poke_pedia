@@ -64,7 +64,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 laEntidadDeRecientes.timeStamp= System.currentTimeMillis()
                 viewModelDetail.updatePokemonRecent(laEntidadDeRecientes)
             }else{
-                var laEntidadDeRecientes = PokemonRecentsEntity(idApi = pokemon.id, nombre = pokemon.name, timeStamp = System.currentTimeMillis())
+                var laEntidadDeRecientes = PokemonRecentsEntity(idApi = pokemon.id, nombre = pokemon.name, timeStamp = System.currentTimeMillis(), userId = 0)
                 viewModelDetail.insertPokemonRecent(laEntidadDeRecientes)
             }
         }
