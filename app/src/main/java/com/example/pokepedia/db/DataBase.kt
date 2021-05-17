@@ -7,17 +7,22 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.pokepedia.db.dao.PokemonDAO
+import com.example.pokepedia.db.dao.UserDAO
+import com.example.pokepedia.db.emtities.UserEntity
 import com.example.pokepedia.db.emtities.PokemonRecentsEntity
 import com.example.pokepedia.db.entities.PokemonEntity
 
 
 @Database(
-    entities = [PokemonEntity::class,PokemonRecentsEntity::class],
+    entities = [PokemonEntity::class,
+                PokemonRecentsEntity::class,
+                UserEntity::class],
     version = 1,
     exportSchema = false
 )
-abstract class DataBase : RoomDatabase() {
+abstract class DataBase: RoomDatabase() {
     abstract fun pokemonDAO(): PokemonDAO
+    abstract fun userDAO(): UserDAO
 
     companion object {
         @Volatile
@@ -43,6 +48,4 @@ abstract class DataBase : RoomDatabase() {
             }
         }
     }
-
-
 }

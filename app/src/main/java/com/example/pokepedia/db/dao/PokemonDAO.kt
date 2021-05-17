@@ -10,8 +10,8 @@ import com.example.pokepedia.db.entities.PokemonEntity
 
 @Dao
 interface PokemonDAO {
-    @Query("Select * from pokemon_favoritos")
-    fun getAllFavoritePokemon(): LiveData< List<PokemonEntity> >
+    @Query("SELECT * FROM pokemon_favoritos WHERE userId = :userId")
+    fun getAllFavoritePokemon(userId: Int): LiveData< List<PokemonEntity> >
 
     @Query("Select * from pokemon_recents order by timeStamp desc")
     fun getAllRecentsPokemon(): LiveData< List<PokemonRecentsEntity> >

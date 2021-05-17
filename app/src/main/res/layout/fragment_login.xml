@@ -63,6 +63,7 @@
                 android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/entrenador"
@@ -81,6 +82,7 @@
                 android:layout_marginTop="24dp"/>
 
             <RadioGroup
+                android:id="@+id/gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -88,7 +90,7 @@
                 >
 
                 <RadioButton
-                    android:id="@+id/radioButton3"
+                    android:id="@+id/male"
                     android:layout_width="0dp"
                     android:layout_weight=".50"
                     android:layout_height="wrap_content"
@@ -97,7 +99,7 @@
                     android:buttonTint="@color/black"/>
 
                 <RadioButton
-                    android:id="@+id/radioButton4"
+                    android:id="@+id/female"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".50"
