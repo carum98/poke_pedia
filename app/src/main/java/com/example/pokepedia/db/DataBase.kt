@@ -10,7 +10,14 @@ import com.example.pokepedia.db.emtities.UserEntity
 import com.example.pokepedia.db.entities.PokemonEntity
 
 
-@Database(entities = arrayOf(PokemonEntity::class, UserEntity::class), version = 1, exportSchema = false)
+@Database(
+    entities = arrayOf(
+        UserEntity::class,
+        PokemonEntity::class
+    ),
+    version = 1,
+    exportSchema = false
+)
 abstract class DataBase: RoomDatabase() {
     abstract fun pokemonDAO(): PokemonDAO
     abstract fun userDAO(): UserDAO
