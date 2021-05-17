@@ -26,12 +26,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASEURL", '"https://pokeapi.co/api/v2/"')
             buildConfigField("String", "URLIMAGENPOKEMON", '"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"')
-
+            buildConfigField("String", "URLDETAILPOKEMON", '"https://pokeapi.co/api/v2/pokemon-species/"')
         }
         debug {
             buildConfigField("String", "BASEURL", '"https://pokeapi.co/api/v2/"')
             buildConfigField("String", "URLIMAGENPOKEMON", '"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"')
-
+            buildConfigField("String", "URLDETAILPOKEMON", '"https://pokeapi.co/api/v2/pokemon-species/"')
         }
     }
     compileOptions {
