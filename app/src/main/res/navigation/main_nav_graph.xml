@@ -11,7 +11,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment3_to_loginFragment2"
-            app:destination="@id/loginFragment2" />
+            app:destination="@id/loginFragment2"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit"/>
     </fragment>
     <fragment
         android:id="@+id/loginFragment2"
