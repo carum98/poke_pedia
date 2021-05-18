@@ -12,7 +12,6 @@
 
         <activity
             android:name=".activitys.MainActivity"
-            android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".activitys.SplashActivity">
