@@ -4,43 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/imagenTituloEmpty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/imagendetitulo"
-        app:layout_constraintBottom_toTopOf="@id/imagenPrincipalEmpty"
+        app:layout_constraintBottom_toTopOf="@+id/imagenPrincipalEmpty"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13"
         app:srcCompat="@drawable/ic_pokemonlogo" />
 
     <ImageView
         android:id="@+id/imagenPrincipalEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/description_empty_image"
         android:src="@drawable/pokemon_empty"
         app:layout_constraintBottom_toTopOf="@+id/textoImagenEmpty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenTituloEmpty"
-        app:layout_constraintVertical_bias="0.120000005" />
+        app:layout_constraintEnd_toEndOf="@+id/imagenTituloEmpty"
+        app:layout_constraintStart_toStartOf="@+id/imagenTituloEmpty"
+        app:layout_constraintTop_toBottomOf="@+id/imagenTituloEmpty" />
 
     <TextView
         android:id="@+id/textoImagenEmpty"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imagenPrincipalEmpty"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/imagenPrincipalEmpty"
+        app:layout_constraintTop_toBottomOf="@+id/imagenPrincipalEmpty" />
 
 </merge>

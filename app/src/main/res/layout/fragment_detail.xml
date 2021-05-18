@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="16dp"
-    tools:context=".fragments.DetailFragment">
+    tools:context=".fragments.DetailFragment"
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/elPokenon"
@@ -62,13 +63,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btnFavorito"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_favorite"
-        app:layout_constraintEnd_toEndOf="@+id/elPokenon"
-        app:layout_constraintTop_toBottomOf="@+id/elPokenon"
-        />
+        android:drawableLeft="@drawable/ic_favorite"
+        android:text="Favorito"
+        app:layout_constraintBottom_toTopOf="@+id/Evolucion"
+        app:layout_constraintEnd_toEndOf="@+id/Evolucion"
+        app:layout_constraintStart_toStartOf="@+id/Evolucion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

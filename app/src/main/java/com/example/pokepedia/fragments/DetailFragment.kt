@@ -85,13 +85,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
     fun btnState(state:Boolean){
         if (state){
-            binding.btnFavorito.setColorFilter(Color.YELLOW)
-            binding.btnFavorito.setBackgroundColor(Color.TRANSPARENT)
-
-
+            //binding.btnFavorito.setColorFilter(Color.YELLOW)
+            binding.btnFavorito.setBackgroundColor(Color.YELLOW)
+            binding.btnFavorito.setTextColor(Color.BLACK)
         }else{
-            binding.btnFavorito.setColorFilter(Color.WHITE)
-            binding.btnFavorito.setBackgroundColor(Color.GRAY)
+            //binding.btnFavorito.setColorFilter(Color.WHITE)
+            binding.btnFavorito.setBackgroundColor(Color.BLACK)
+            binding.btnFavorito.setTextColor(Color.WHITE)
         }
     }
 
