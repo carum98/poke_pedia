@@ -1,10 +1,12 @@
 package com.example.pokepedia.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.pokepedia.adapters.AdaptadorPrincipal
 import com.example.pokepedia.databinding.FragmentListaPrincipalBinding
@@ -14,6 +16,7 @@ import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
+
 
 /**
  * A fragment representing a list of Items.
@@ -53,6 +56,7 @@ class ListaPrincipalFragment : Fragment() {
         disposable.clear()
         _binding = null
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         disposable.add(
@@ -74,14 +78,27 @@ class ListaPrincipalFragment : Fragment() {
                     viewModel.getPokemonList().observe(viewLifecycleOwner) {
                         MostrarResultado (it.isEmpty())
                     }
-
-
-
                 }
         )
 
+        binding.txtBusqueda.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchPokemon(binding.txtBusqueda.text.toString())
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
 
     }
+
+    private fun searchPokemon(text: String) {
+        viewModel.getPokemon(text)
+        viewModel.getPokemonList().observe(viewLifecycleOwner) {
+            MostrarResultado (it.isEmpty())
+        }
+    }
+
     private fun MostrarResultado(seDebeMostrar:Boolean) {
         if(!seDebeMostrar){
             binding.busquedaFallida.visibility = View.GONE
