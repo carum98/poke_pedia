@@ -1,11 +1,13 @@
 package com.example.pokepedia.fragments
 
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -17,6 +19,7 @@ import com.example.pokepedia.modelos.Pokemon
 import com.example.pokepedia.modelos.PokemonDetail
 import com.example.pokepedia.viewmodels.PokemonDetailViewModel
 import com.example.pokepedia.viewmodels.PokemonViewModel
+
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
     private var _binding: FragmentDetailBinding? = null
@@ -88,10 +91,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             //binding.btnFavorito.setColorFilter(Color.YELLOW)
             binding.btnFavorito.setBackgroundColor(Color.YELLOW)
             binding.btnFavorito.setTextColor(Color.BLACK)
+            val icon = resources.getDrawable(R.drawable.ic_favorite_black)
+            binding.btnFavorito.setCompoundDrawablesRelativeWithIntrinsicBounds(icon,null,null,null)
         }else{
             //binding.btnFavorito.setColorFilter(Color.WHITE)
             binding.btnFavorito.setBackgroundColor(Color.BLACK)
             binding.btnFavorito.setTextColor(Color.WHITE)
+            val icon = resources.getDrawable(R.drawable.ic_favorite)
+            binding.btnFavorito.setCompoundDrawablesRelativeWithIntrinsicBounds(icon,null,null,null)
         }
     }
 
