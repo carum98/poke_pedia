@@ -60,8 +60,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/black"
-                android:imeOptions="actionDone">
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name"
@@ -70,7 +69,10 @@
                     android:hint="@string/entrenador"
                     android:backgroundTint="#00FFFFFF"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
+                    android:textColorHint="@color/black"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

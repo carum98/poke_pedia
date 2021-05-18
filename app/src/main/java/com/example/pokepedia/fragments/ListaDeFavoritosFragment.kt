@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.pokepedia.BuildConfig
@@ -100,37 +102,50 @@ class ListaDeFavoritosFragment : Fragment() {
         disposable.add(
             binding.searchButton.clicks()
                 .subscribe {
-                    var elTextoDeBusqueda=binding.txtBusqueda.text.toString()
+                    var elTextoDeBusqueda = binding.txtBusqueda.text.toString()
+
                     if(elTextoDeBusqueda.isEmpty()){
                         getFavoriteList()
                     }else{
-                        viewModelDetail.getFavoritePokemonByName(elTextoDeBusqueda).observe(viewLifecycleOwner) {
-                            losPokemonesFavoritos= arrayListOf()
-                            it.forEach {
-                                var poke=Pokemon(it.idApi,it.nombre,"","${BuildConfig.URLIMAGENPOKEMON}${it.idApi}.png")
-                                losPokemonesFavoritos.add(poke)
-                            }
-                            if(losPokemonesFavoritos.size==0){
-                                if(!binding.busquedaFallida.isVisible){
-                                    binding.noHayPokemon.visibility=View.GONE
-                                    binding.busquedaFallida.visibility=View.VISIBLE
-                                }
-                            }
-                            adapter.losPokemones = losPokemonesFavoritos
-                            binding.listRecyclerView.adapter=adapter
-                        }
-                        MostrarResultado(losPokemonesFavoritos.isEmpty())
+                        searchPokemon(elTextoDeBusqueda)
                     }
-
-
                 }
         )
+
+        binding.txtBusqueda.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchPokemon(binding.txtBusqueda.text.toString())
+                return@OnEditorActionListener true
+            }
+            false
+        })
     }
     override fun onDestroyView() {
         super.onDestroyView()
         disposable.clear()
         _binding = null
     }
+
+    private fun searchPokemon(text: String) {
+        viewModelDetail.getFavoritePokemonByName(text).observe(viewLifecycleOwner) {
+            losPokemonesFavoritos= arrayListOf()
+            it.forEach {
+                var poke=Pokemon(it.idApi,it.nombre,"","${BuildConfig.URLIMAGENPOKEMON}${it.idApi}.png")
+                losPokemonesFavoritos.add(poke)
+            }
+            if(losPokemonesFavoritos.size==0){
+                if(!binding.busquedaFallida.isVisible){
+                    binding.noHayPokemon.visibility=View.GONE
+                    binding.busquedaFallida.visibility=View.VISIBLE
+                }
+            }
+            adapter.losPokemones = losPokemonesFavoritos
+            binding.listRecyclerView.adapter=adapter
+        }
+        MostrarResultado(losPokemonesFavoritos.isEmpty())
+    }
+
+
     private fun MostrarResultado(seDebeMostrar:Boolean) {
         if(!seDebeMostrar){
             binding.busquedaFallida.visibility = View.GONE
