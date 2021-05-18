@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.pokepedia.BuildConfig
 import com.example.pokepedia.adapters.AdaptadorDeLosFavoritos
@@ -79,17 +80,7 @@ class ListaDeFavoritosFragment : Fragment() {
             }
             adapter.losPokemones = losPokemonesFavoritos
             binding.listRecyclerView.adapter = adapter
-            /*       var bindingEmpty: EmptyViewBinding = EmptyViewBinding.inflate(LayoutInflater.from(context), binding.root)
 
-
-            if(losPokemonesFavoritos.size==0){
-                bindingEmpty.textoImagenEmpty.text =R.string.empty_fav.toString()
-                bindingEmpty.imagenPrincipalEmpty.setImageResource(R.drawable.pokemo_no_encontrado)
-            } else{
-                bindingEmpty.textoImagenEmpty.text =R.string.textBusquedaFallida.toString()
-                bindingEmpty.imagenPrincipalEmpty.setImageResource(R.drawable.pokemo_no_encontrado)
-            }*/
-            // losPokemonesFavoritos.clear()
         }
     }
 
@@ -115,15 +106,15 @@ class ListaDeFavoritosFragment : Fragment() {
                     }else{
                         viewModelDetail.getFavoritePokemonByName(elTextoDeBusqueda).observe(viewLifecycleOwner) {
                             losPokemonesFavoritos= arrayListOf()
-                            if(it!=null){
+                            it.forEach {
                                 var poke=Pokemon(it.idApi,it.nombre,"","${BuildConfig.URLIMAGENPOKEMON}${it.idApi}.png")
                                 losPokemonesFavoritos.add(poke)
-                                if(losPokemonesFavoritos.size==0){
+                            }
+                            if(losPokemonesFavoritos.size==0){
+                                if(!binding.busquedaFallida.isVisible){
                                     binding.noHayPokemon.visibility=View.GONE
                                     binding.busquedaFallida.visibility=View.VISIBLE
                                 }
-                            }else{
-                                getFavoriteList()
                             }
                             adapter.losPokemones = losPokemonesFavoritos
                             binding.listRecyclerView.adapter=adapter

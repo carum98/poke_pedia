@@ -16,8 +16,8 @@ interface PokemonDAO {
     @Query("Select * from pokemon_recents where userId=:userId order by timeStamp desc")
     fun getAllRecentsPokemon(userId: Int): LiveData< List<PokemonRecentsEntity> >
 
-    @Query("Select  * from pokemon_favoritos where idApi=:id Limit 1")
-    fun getFavoritePokemon(id:String): LiveData< PokemonEntity >
+    @Query("Select  * from pokemon_favoritos where userId=:userId  and idApi=:id Limit 1")
+    fun getFavoritePokemon(id:String,userId:Int): LiveData< PokemonEntity >
 
     @Query("Select  * from pokemon_recents where userId=:userId  and idApi=:id Limit 1")
     fun getRecentPokemonById(id:String,userId:Int): LiveData< PokemonRecentsEntity >
@@ -25,8 +25,8 @@ interface PokemonDAO {
     @Update
     fun updateRecents(pokemonRecents: PokemonRecentsEntity)
 
-    @Query("Select  * from pokemon_favoritos where userId=:userId and nombre like  :nombreB  Limit 1")
-    fun getFavoritePokemonByName(nombreB:String,userId: Int): LiveData< PokemonEntity >
+    @Query("Select  * from pokemon_favoritos where userId=:userId and nombre like :nombreB")
+    fun getFavoritePokemonByName(nombreB:String,userId: Int): LiveData< List<PokemonEntity> >
 
     @Insert
     fun insertPokemonFavorito(PokemonEntity: PokemonEntity)

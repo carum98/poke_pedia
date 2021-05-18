@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.pokepedia.R
 import com.example.pokepedia.databinding.FragmentUserBinding
 import com.example.pokepedia.viewmodels.UserViewModel
@@ -31,9 +32,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val user = viewModelUser.getUser()
-
         binding.name.text = user.name
-
         binding.imageProfile.setImageDrawable(
             ContextCompat.getDrawable(
             view.context,
@@ -43,8 +42,8 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         binding.btnLogout.setOnClickListener {
             user.isActive = false
             viewModelUser.updateUser(user)
-
-            view.findNavController().navigate(R.id.action_homeFragment3_to_loginFragment2)
+            var action = UserFragmentDirections.actionUserFragmentToLoginFragment()
+            this.findNavController().navigate(action)
         }
     }
 }

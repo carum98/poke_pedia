@@ -35,10 +35,13 @@ class PokemonRepository(context: Context) {
         val user = db.userDAO().getUser()
         return db.pokemonDAO().getAllFavoritePokemon(userId = user.id)
     }
-    fun getFavoritePokemonById(idApi:String):LiveData<PokemonEntity>  = db.pokemonDAO().getFavoritePokemon(idApi)
-    fun getFavoritePokemonByName(name:String):LiveData<PokemonEntity> {
+    fun getFavoritePokemonById(idApi:String):LiveData<PokemonEntity>{
         val user = db.userDAO().getUser()
-        return db.pokemonDAO().getFavoritePokemonByName(name,user.id)
+        return db.pokemonDAO().getFavoritePokemon(idApi,user.id)
+    }
+    fun getFavoritePokemonByName(name:String):LiveData<List<PokemonEntity>> {
+        val user = db.userDAO().getUser()
+        return db.pokemonDAO().getFavoritePokemonByName("%$name%",user.id)
     }
     fun getRecentPokemonById(idApi:String):LiveData<PokemonRecentsEntity>{
         val user = db.userDAO().getUser()
