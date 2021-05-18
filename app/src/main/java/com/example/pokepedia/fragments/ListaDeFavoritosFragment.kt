@@ -110,16 +110,11 @@ class ListaDeFavoritosFragment : Fragment() {
                                 var poke=Pokemon(it.idApi,it.nombre,"","${BuildConfig.URLIMAGENPOKEMON}${it.idApi}.png")
                                 losPokemonesFavoritos.add(poke)
                             }
-                            if(losPokemonesFavoritos.size==0){
-                                if(!binding.busquedaFallida.isVisible){
-                                    binding.noHayPokemon.visibility=View.GONE
-                                    binding.busquedaFallida.visibility=View.VISIBLE
-                                }
-                            }
                             adapter.losPokemones = losPokemonesFavoritos
                             binding.listRecyclerView.adapter=adapter
+                            MostrarResultado(losPokemonesFavoritos.isEmpty())
                         }
-                        MostrarResultado(losPokemonesFavoritos.isEmpty())
+
                     }
 
 
@@ -132,12 +127,16 @@ class ListaDeFavoritosFragment : Fragment() {
         _binding = null
     }
     private fun MostrarResultado(seDebeMostrar:Boolean) {
-        if(!seDebeMostrar){
-            binding.busquedaFallida.visibility = View.GONE
-            binding.listRecyclerView.visibility =View.VISIBLE
+        if(seDebeMostrar){
+            if(!binding.busquedaFallida.isVisible) {
+                binding.busquedaFallida.visibility = View.VISIBLE
+                binding.listRecyclerView.visibility =View.GONE
+            }
         }else{
-            binding.busquedaFallida.visibility = View.VISIBLE
-            binding.listRecyclerView.visibility =View.GONE
+            if(!binding.listRecyclerView.isVisible) {
+                binding.busquedaFallida.visibility = View.GONE
+                binding.listRecyclerView.visibility =View.VISIBLE
+            }
         }
     }
 
