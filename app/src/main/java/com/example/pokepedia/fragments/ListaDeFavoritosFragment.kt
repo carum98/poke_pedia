@@ -95,7 +95,6 @@ class ListaDeFavoritosFragment : Fragment() {
             binding.searchButton.clicks()
                 .subscribe {
                     var elTextoDeBusqueda = binding.txtBusqueda.text.toString()
-
                     if(elTextoDeBusqueda.isEmpty()){
                         getFavoriteList()
                     }else{
@@ -117,7 +116,6 @@ class ListaDeFavoritosFragment : Fragment() {
         disposable.clear()
         _binding = null
     }
-
     private fun searchPokemon(text: String) {
         viewModelDetail.getFavoritePokemonByName(text).observe(viewLifecycleOwner) {
             losPokemonesFavoritos= arrayListOf()
@@ -130,13 +128,6 @@ class ListaDeFavoritosFragment : Fragment() {
             MostrarResultado(losPokemonesFavoritos.isEmpty())
         }
 
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        disposable.clear()
-        _binding = null
     }
     private fun MostrarResultado(seDebeMostrar:Boolean) {
         if(seDebeMostrar){

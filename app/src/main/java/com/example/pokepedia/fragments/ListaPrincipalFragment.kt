@@ -44,13 +44,18 @@ class ListaPrincipalFragment : Fragment() {
 
         binding.listRecyclerView.adapter = adapter
 
-        viewModel.getPokemonList().observe(viewLifecycleOwner) {
-            adapter.losPokemones = it
-            binding.listRecyclerView.adapter=adapter
-        }
+        obtenerListaPrincipal()
 
         return view
     }
+
+    private fun obtenerListaPrincipal() {
+        viewModel.getPokemonList().observe(viewLifecycleOwner) {
+            adapter.losPokemones = it
+            binding.listRecyclerView.adapter = adapter
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         disposable.clear()
@@ -74,10 +79,14 @@ class ListaPrincipalFragment : Fragment() {
         disposable.add(
             binding.searchButton.clicks()
                 .subscribe {
-                    viewModel.getPokemon(binding.txtBusqueda.text.toString())
-                    viewModel.getPokemonList().observe(viewLifecycleOwner) {
-                        MostrarResultado (it.isEmpty())
+                    var elTextoDeBusqueda =binding.txtBusqueda.text.toString()
+                    if(!elTextoDeBusqueda.isEmpty()){
+                        viewModel.getPokemon(binding.txtBusqueda.text.toString())
+                        viewModel.getPokemonList().observe(viewLifecycleOwner) {
+                            MostrarResultado (it.isEmpty())
+                        }
                     }
+
                 }
         )
 
