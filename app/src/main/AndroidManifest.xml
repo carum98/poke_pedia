@@ -11,6 +11,7 @@
         android:theme="@style/Theme.PokePedia">
         <activity
             android:name=".activitys.MainActivity"
+            android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
