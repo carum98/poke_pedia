@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.pokepedia.BuildConfig
-import com.example.pokepedia.adapters.AdaptadorDeLosFavoritos
 import com.example.pokepedia.adapters.AdaptadorDeRecientes
 import com.example.pokepedia.databinding.FrangmentListaRecientesBinding
 import com.example.pokepedia.modelos.Pokemon
@@ -40,7 +39,7 @@ class ListaRecientesFragment : Fragment() {
                     it.idApi,
                     it.nombre,
                     "",
-                    "${BuildConfig.URLIMAGENPOKEMON}${it.idApi}.png"
+                    arrayListOf()
                 )
                 losPokemonesRecientes.add(poke)
             }

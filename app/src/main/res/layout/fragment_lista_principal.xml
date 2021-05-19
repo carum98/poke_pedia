@@ -21,6 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintVertical_bias="0.52"
         app:title="@string/textBusquedaFallida" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -29,8 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/listRecyclerView"
         app:layout_constraintEnd_toStartOf="@+id/searchButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +41,10 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#00000000"
             android:hint="@string/HintNombrePokemon"
-            android:singleLine="true"
-            android:inputType="text"
+            android:imeActionLabel="@string/btnBuscar"
             android:imeOptions="actionSearch"
-            android:imeActionLabel="@string/btnBuscar"/>
+            android:inputType="text"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -70,7 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-
         app:spanCount="3"
         tools:listitem="@layout/fragment_principal">
 

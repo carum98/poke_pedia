@@ -33,7 +33,7 @@ class AdaptadorDeLosFavoritos
             binding.content.text = pokemon.name
 
             Glide.with(binding.laFotoDelPokemon.context)
-                .load(pokemon.urlImagen)
+                .load(pokemon.getImage())
                 .circleCrop()
                 .into(binding.laFotoDelPokemon)
 

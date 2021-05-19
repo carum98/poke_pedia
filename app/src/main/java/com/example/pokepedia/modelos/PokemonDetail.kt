@@ -10,15 +10,17 @@ data class PokemonDetail(
     val url: String,
     var urlImagen: String,
     var flavor_text_entries: List<PokemonDescription>,
-    var genera: List<PokemonType>
-) : Parcelable{
+    var genera: List<PokemonType>,
+    var evolution_chain:EvolutionChain
+):Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readString()?:"",
         parcel.readString()?:"",
         parcel.readString()?:"",
         parcel.readString()?:"",
         parcel.createTypedArrayList(PokemonDescription)!!,
-        parcel.createTypedArrayList(PokemonType)!!
+        parcel.createTypedArrayList(PokemonType)!!,
+        parcel.readParcelable(EvolutionChain::class.java.classLoader)!!
     ) {
     }
 
@@ -29,6 +31,7 @@ data class PokemonDetail(
         parcel.writeString(urlImagen)
         parcel.writeTypedList(flavor_text_entries)
         parcel.writeTypedList(genera)
+        parcel.writeParcelable(evolution_chain, flags)
     }
 
     override fun describeContents(): Int {
@@ -45,4 +48,6 @@ data class PokemonDetail(
         }
     }
 
+
 }
+

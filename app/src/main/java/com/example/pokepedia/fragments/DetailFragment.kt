@@ -1,20 +1,23 @@
 package com.example.pokepedia.fragments
 
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.pokepedia.R
+import com.example.pokepedia.adapters.AdaptadorDeRecientes
+import com.example.pokepedia.adapters.AdaptadorDetalle
 import com.example.pokepedia.databinding.FragmentDetailBinding
 import com.example.pokepedia.db.emtities.PokemonRecentsEntity
 import com.example.pokepedia.db.entities.PokemonEntity
+import com.example.pokepedia.modelos.DetalleDeCadena
 import com.example.pokepedia.modelos.Pokemon
 import com.example.pokepedia.modelos.PokemonDetail
 import com.example.pokepedia.viewmodels.PokemonDetailViewModel
@@ -30,6 +33,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private lateinit var pokemon:Pokemon
     private val args: DetailFragmentArgs by navArgs()
     private lateinit var pokemonDetail:PokemonDetail
+    private var listaDeEvoluciones= MutableLiveData<List<Pokemon>>()
+    private  val adapter = AdaptadorDetalle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +44,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         val view = binding.root
         pokemon = args.pokemon
+        binding.elNombre.text = pokemon.name.capitalize()
+        binding.laDescripcion.text = pokemon.url
+        pokemon.evoluciones= arrayListOf()
 
         viewModel.getPokemonDetail(pokemon.id)
         viewModel.getDataPokemonDetail().observe(viewLifecycleOwner)
@@ -47,20 +55,50 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             binding.laDescripcion.text = pokemonDetail.flavor_text_entries.firstOrNull{ detail -> detail.language.name == "es"}?.flavor_text
                 ?: ""
             binding.tipo.text = pokemonDetail.genera.firstOrNull{tipo -> tipo.language.name == "es"}?.genus?:""
+            getEvolutionChain()
         }
 
-        binding.elNombre.text = pokemon.name.capitalize()
-        binding.laDescripcion.text = pokemon.url
 
         Glide.with(view.context)
-            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png")
+            .load(pokemon.getImage())
             .into(binding.elPokenon)
 //        val viewModel = PokemonViewModel()
         return view
     }
 
+    private fun getEvolutionChain() {
+        var elEvolutionChainUrl = pokemonDetail.evolution_chain.url.split("/")
+        var elIdDeLaCadena = elEvolutionChainUrl[elEvolutionChainUrl.size - 2]
+        viewModel.getPokemonEvolution(elIdDeLaCadena)
+        viewModel.getPokemonEvolutionData().observe(viewLifecycleOwner)
+        {
+            var evolutions=it.chain
+            findEvolutions(evolutions)
+        }
+
+    }
+
+    private fun findEvolutions(evolutions: DetalleDeCadena) {
+        var elArregloDelId=evolutions.species.url.split("/")
+        var elIdDelPokemonParaAgregar=elArregloDelId[elArregloDelId.size-2]
+        if(!pokemon.id.equals(elIdDelPokemonParaAgregar)){
+            addEvolutions(evolutions.species.name,elIdDelPokemonParaAgregar)
+        }
+        evolutions.evolves_to.forEach{
+            findEvolutions(it)
+        }
+    }
+
+    private fun addEvolutions(pokemonName:String, idDelPokemon:String) {
+        pokemon.evoluciones?.add(Pokemon(idDelPokemon,pokemonName,"",null))
+        adapter.losPokemones = pokemon.evoluciones!!
+        binding.laListaDeEvoluciones.adapter = adapter
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModelDetail.getRecentPokemonById(pokemon.id).observe(viewLifecycleOwner) {
             if(it != null){
                 var laEntidadDeRecientes = it

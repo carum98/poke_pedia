@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/elItemDeDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:fitsSystemWindows="true">
+
+
+        <ImageView
+            android:id="@+id/laFotoDelPokemon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:paddingHorizontal="15dp"
+            app:srcCompat="@drawable/pokemon_empty" />
+
+        <TextView
+            android:id="@+id/nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="Nombre"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="20sp" />
+    </LinearLayout>

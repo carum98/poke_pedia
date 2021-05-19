@@ -27,11 +27,13 @@ android {
             buildConfigField("String", "BASEURL", '"https://pokeapi.co/api/v2/"')
             buildConfigField("String", "URLIMAGENPOKEMON", '"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"')
             buildConfigField("String", "URLDETAILPOKEMON", '"https://pokeapi.co/api/v2/pokemon-species/"')
+            buildConfigField("String", "URLEVOLUCION", '"https://pokeapi.co/api/v2/evolution-chain/"')
         }
         debug {
             buildConfigField("String", "BASEURL", '"https://pokeapi.co/api/v2/"')
             buildConfigField("String", "URLIMAGENPOKEMON", '"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"')
             buildConfigField("String", "URLDETAILPOKEMON", '"https://pokeapi.co/api/v2/pokemon-species/"')
+            buildConfigField("String", "URLEVOLUCION", '"https://pokeapi.co/api/v2/evolution-chain/"')
         }
     }
     compileOptions {

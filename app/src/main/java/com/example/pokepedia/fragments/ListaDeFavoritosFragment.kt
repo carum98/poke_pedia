@@ -14,7 +14,6 @@ import com.example.pokepedia.adapters.AdaptadorDeLosFavoritos
 import com.example.pokepedia.databinding.FragmentListaFavoritosBinding
 import com.example.pokepedia.modelos.Pokemon
 import com.example.pokepedia.viewmodels.PokemonDetailViewModel
-import com.example.pokepedia.viewmodels.PokemonViewModel
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -25,20 +24,21 @@ import java.util.concurrent.TimeUnit
  * A fragment representing a list of Items.
  */
 class ListaDeFavoritosFragment : Fragment() {
-//   private val viewModel: PokemonViewModel by viewModels()
-    private  val adapter = AdaptadorDeLosFavoritos()
+    //   private val viewModel: PokemonViewModel by viewModels()
+    private val adapter = AdaptadorDeLosFavoritos()
 
     private var _binding: FragmentListaFavoritosBinding? = null
     private val binding get() = _binding!!
     private val disposable = CompositeDisposable()
     private lateinit var losPokemonesFavoritos: MutableList<Pokemon>
 
-    private  val  viewModelDetail: PokemonDetailViewModel by viewModels()
+    private val viewModelDetail: PokemonDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,7 +64,8 @@ class ListaDeFavoritosFragment : Fragment() {
                     it.idApi,
                     it.nombre,
                     "",
-                    "${BuildConfig.URLIMAGENPOKEMON}${it.idApi}.png"
+                    arrayListOf()
+
                 )
                 losPokemonesFavoritos.add(poke)
             }
@@ -95,9 +96,9 @@ class ListaDeFavoritosFragment : Fragment() {
             binding.searchButton.clicks()
                 .subscribe {
                     var elTextoDeBusqueda = binding.txtBusqueda.text.toString()
-                    if(elTextoDeBusqueda.isEmpty()){
+                    if (elTextoDeBusqueda.isEmpty()) {
                         getFavoriteList()
-                    }else{
+                    } else {
                         searchPokemon(elTextoDeBusqueda)
                     }
                 }
@@ -111,34 +112,41 @@ class ListaDeFavoritosFragment : Fragment() {
             false
         })
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         disposable.clear()
         _binding = null
     }
+
     private fun searchPokemon(text: String) {
         viewModelDetail.getFavoritePokemonByName(text).observe(viewLifecycleOwner) {
-            losPokemonesFavoritos= arrayListOf()
+            losPokemonesFavoritos = arrayListOf()
             it.forEach {
-                var poke=Pokemon(it.idApi,it.nombre,"","${BuildConfig.URLIMAGENPOKEMON}${it.idApi}.png")
+                var poke = Pokemon(
+                    it.idApi, it.nombre,
+                    "",
+                    arrayListOf()
+                )
                 losPokemonesFavoritos.add(poke)
             }
             adapter.losPokemones = losPokemonesFavoritos
-            binding.listRecyclerView.adapter=adapter
+            binding.listRecyclerView.adapter = adapter
             MostrarResultado(losPokemonesFavoritos.isEmpty())
         }
 
     }
-    private fun MostrarResultado(seDebeMostrar:Boolean) {
-        if(seDebeMostrar){
-            if(!binding.busquedaFallida.isVisible) {
+
+    private fun MostrarResultado(seDebeMostrar: Boolean) {
+        if (seDebeMostrar) {
+            if (!binding.busquedaFallida.isVisible) {
                 binding.busquedaFallida.visibility = View.VISIBLE
-                binding.listRecyclerView.visibility =View.GONE
+                binding.listRecyclerView.visibility = View.GONE
             }
-        }else{
-            if(!binding.listRecyclerView.isVisible) {
+        } else {
+            if (!binding.listRecyclerView.isVisible) {
                 binding.busquedaFallida.visibility = View.GONE
-                binding.listRecyclerView.visibility =View.VISIBLE
+                binding.listRecyclerView.visibility = View.VISIBLE
             }
         }
     }
