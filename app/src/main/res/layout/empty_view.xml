@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:contentDescription="@string/imagendetitulo"
-        app:layout_constraintBottom_toTopOf="@+id/imagenPrincipalEmpty"
+        app:layout_constraintBottom_toTopOf="@+id/textoImagenEmpty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,24 +23,26 @@
         android:id="@+id/imagenPrincipalEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:contentDescription="@string/description_empty_image"
         android:src="@drawable/pokemon_empty"
-        app:layout_constraintBottom_toTopOf="@+id/textoImagenEmpty"
-        app:layout_constraintEnd_toEndOf="@+id/imagenTituloEmpty"
-        app:layout_constraintStart_toStartOf="@+id/imagenTituloEmpty"
-        app:layout_constraintTop_toBottomOf="@+id/imagenTituloEmpty" />
+        app:layout_constraintEnd_toEndOf="@+id/textoImagenEmpty"
+        app:layout_constraintStart_toStartOf="@+id/textoImagenEmpty"
+        app:layout_constraintTop_toBottomOf="@+id/textoImagenEmpty" />
 
     <TextView
         android:id="@+id/textoImagenEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imagenPrincipalEmpty"
-        app:layout_constraintStart_toStartOf="@+id/imagenPrincipalEmpty"
-        app:layout_constraintTop_toBottomOf="@+id/imagenPrincipalEmpty" />
+        app:layout_constraintBottom_toTopOf="@+id/imagenPrincipalEmpty"
+        app:layout_constraintEnd_toEndOf="@+id/imagenTituloEmpty"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/imagenTituloEmpty"
+        app:layout_constraintTop_toBottomOf="@+id/imagenTituloEmpty"
+        tools:text="Texto contenido" />
 
 </merge>
