@@ -50,6 +50,7 @@ class ListaRecientesFragment : Fragment() {
             }
             adapter.losPokemones = losPokemonesRecientes
             binding.listRecyclerView.adapter = adapter
+            binding.progressBar.visibility = View.GONE
         }
     }
     override fun onDestroyView() {

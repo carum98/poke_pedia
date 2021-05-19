@@ -54,6 +54,7 @@ class ListaPrincipalFragment : Fragment() {
         viewModel.getPokemonList().observe(viewLifecycleOwner) {
             adapter.losPokemones = it
             binding.listRecyclerView.adapter = adapter
+            binding.progressBar.visibility = View.GONE
         }
     }
 
@@ -80,15 +81,18 @@ class ListaPrincipalFragment : Fragment() {
         disposable.add(
             binding.searchButton.clicks()
                 .subscribe {
+                    binding.progressBar.visibility = View.VISIBLE
                     hideKeyboard()
                     var elTextoDeBusqueda =binding.txtBusqueda.text.toString().toLowerCase()
                     if(!elTextoDeBusqueda.isEmpty()){
                         viewModel.getPokemon(elTextoDeBusqueda)
                         viewModel.getPokemonList().observe(viewLifecycleOwner) {
-                            MostrarResultado (it.isEmpty())
+                            MostrarResultado(it.isEmpty())
+                            binding.progressBar.visibility = View.GONE
                         }
+                    } else {
+                        binding.progressBar.visibility = View.GONE
                     }
-
                 }
         )
 

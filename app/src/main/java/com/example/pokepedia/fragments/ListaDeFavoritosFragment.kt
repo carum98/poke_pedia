@@ -83,7 +83,7 @@ class ListaDeFavoritosFragment : Fragment() {
             }
             adapter.losPokemones = losPokemonesFavoritos
             binding.listRecyclerView.adapter = adapter
-
+            binding.progressBar.visibility = View.GONE
         }
     }
 
@@ -103,12 +103,15 @@ class ListaDeFavoritosFragment : Fragment() {
         disposable.add(
             binding.searchButton.clicks()
                 .subscribe {
+                    binding.progressBar.visibility = View.VISIBLE
                     hideKeyboard()
                     var elTextoDeBusqueda = binding.txtBusqueda.text.toString()
                     if (elTextoDeBusqueda.isEmpty()) {
                         getFavoriteList()
+                        binding.progressBar.visibility = View.GONE
                     } else {
                         searchPokemon(elTextoDeBusqueda)
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
         )
