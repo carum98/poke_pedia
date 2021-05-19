@@ -41,7 +41,7 @@ class PokemonViewModel: ViewModel() {
     }
 
     fun requestPokemon() {
-        service.getPokemonList("100","0")
+        service.getPokemonList("200","0")
             .enqueue(object : Callback<PokemonResponse> {
                 override fun onResponse(call: Call<PokemonResponse>, response: Response<PokemonResponse>) {
                     response.body()?.let {

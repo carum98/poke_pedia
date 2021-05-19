@@ -21,10 +21,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
-
-/**
- * A fragment representing a list of Items.
- */
 class ListaPrincipalFragment : Fragment() {
 
     private val viewModel: PokemonViewModel by viewModels()
@@ -76,14 +72,12 @@ class ListaPrincipalFragment : Fragment() {
                 .subscribe {
                     if(it.isEmpty()){
                         binding.searchButton.isEnabled=false
-                        binding.textInputLayout.error ="Campo requerido"
                     }else{
                         binding.searchButton.isEnabled=true
                         binding.textInputLayout.error =null
                     }
                 }
         )
-
 
         disposable.add(
             binding.searchButton.clicks()
@@ -98,15 +92,19 @@ class ListaPrincipalFragment : Fragment() {
                             binding.progressBar.visibility = View.GONE
                         }
                     } else {
+                        binding.textInputLayout.error ="Campo requerido"
                         binding.progressBar.visibility = View.GONE
                     }
                 }
         )
 
         binding.txtBusqueda.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                searchPokemon(binding.txtBusqueda.text.toString())
-                return@OnEditorActionListener true
+            var elTextoDeBusqueda =binding.txtBusqueda.text.toString().toLowerCase()
+            if(!elTextoDeBusqueda.isEmpty()){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchPokemon(binding.txtBusqueda.text.toString())
+                    return@OnEditorActionListener true
+                }
             }
             false
         })
@@ -131,7 +129,6 @@ class ListaPrincipalFragment : Fragment() {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
     private fun searchPokemon(text: String) {
         viewModel.getPokemon(text)
         viewModel.getPokemonList().observe(viewLifecycleOwner) {
