@@ -37,11 +37,6 @@ class ListaDeFavoritosFragment : Fragment() {
 
     private val viewModelDetail: PokemonDetailViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +49,6 @@ class ListaDeFavoritosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         Busqueda()
         getFavoriteList()
     }
@@ -68,7 +62,6 @@ class ListaDeFavoritosFragment : Fragment() {
                     it.nombre,
                     "",
                     arrayListOf()
-
                 )
                 losPokemonesFavoritos.add(poke)
             }
@@ -78,6 +71,7 @@ class ListaDeFavoritosFragment : Fragment() {
                 binding.txtBusqueda.visibility = View.GONE
                 binding.searchButton.visibility = View.GONE
             }else{
+                binding.searchButton.isEnabled=false
                 binding.txtBusqueda.visibility = View.VISIBLE
                 binding.searchButton.visibility = View.VISIBLE
             }
@@ -95,7 +89,13 @@ class ListaDeFavoritosFragment : Fragment() {
                 .map { it.toString() }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    binding.textInputLayout.error = if (it.isEmpty()) "Campo requerido" else null
+                    if(it.isEmpty()){
+                        binding.searchButton.isEnabled=false
+                        binding.textInputLayout.error ="Campo requerido"
+                    }else{
+                        binding.searchButton.isEnabled=true
+                        binding.textInputLayout.error =null
+                    }
                 }
         )
 

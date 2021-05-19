@@ -1,11 +1,11 @@
 package com.example.pokepedia.fragments
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -36,9 +36,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val navControl = navHostFragment.navController
 
         binding.bottomNavigationView.setupWithNavController(navControl)
-
+        navControl.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.loginFragment) {
+                binding.bottomNavigationView.visibility = View.GONE
+            } else {
+                binding.bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
         val user = userModelHome.getUser()
-
         if (user === null) {
             findNavController().navigate(R.id.action_homeFragment3_to_loginFragment2)
         }

@@ -35,7 +35,7 @@ class LoginFunViewModel(application: Application) : AndroidViewModel(application
     LoginFunViewModelInputs,
     LoginFunViewModelOutputs,
     LoginFunViewModelType {
-  private var repository: UserRepository
+    private var repository: UserRepository
 
     // TYPE
 
@@ -56,22 +56,17 @@ class LoginFunViewModel(application: Application) : AndroidViewModel(application
 
     init {
         repository = UserRepository(application.applicationContext)
-        //val genero = if(binding.gender.checkedRadioButtonId == R.id.male) "M" else "F"
-
-        isButtonEnabled = Observable.combineLatest(name, isChecked, {n, g -> n.isNotEmpty() && g })
-
+        isButtonEnabled = Observable.combineLatest(name, isChecked, { n, g -> n.isNotEmpty() && g })
         nameError = name.map { it.isEmpty() }
 
         insertNewUser = saveClicked
-            .withLatestFrom(name, gender, { _, n, g: String -> UserEntity(n,g,true)})
-            .doOnNext {  acction(it) }
+            .withLatestFrom(name, gender, { _, n, g: String -> UserEntity(n, g, true) })
+            .doOnNext { acction(it) }
             .map { true }
-
-
-
     }
-    fun acction(user:UserEntity){
-        var userExitente= findUser(user)
+
+    private fun acction(user: UserEntity) {
+        var userExitente = findUser(user)
         if (userExitente != null) {
             userExitente.isActive = true
             updateUser(userExitente)
@@ -79,13 +74,14 @@ class LoginFunViewModel(application: Application) : AndroidViewModel(application
             insertUser(user)
         }
     }
-  fun findUser(user: UserEntity) : UserEntity {
-      return repository.findUser(user);
-  }
+
+    fun findUser(user: UserEntity): UserEntity {
+        return repository.findUser(user);
+    }
 
     fun insertUser(user: UserEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-                repository.insertUser(user)
+            repository.insertUser(user)
         }
     }
 

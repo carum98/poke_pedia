@@ -47,6 +47,7 @@ class ListaPrincipalFragment : Fragment() {
         val view = binding.root
         binding.listRecyclerView.adapter = adapter
         obtenerListaPrincipal()
+        binding.searchButton.isEnabled=false
         return view
     }
 
@@ -73,7 +74,13 @@ class ListaPrincipalFragment : Fragment() {
                 .map { it.toString() }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    binding.textInputLayout.error = if (it.isEmpty()) "Campo requerido" else null
+                    if(it.isEmpty()){
+                        binding.searchButton.isEnabled=false
+                        binding.textInputLayout.error ="Campo requerido"
+                    }else{
+                        binding.searchButton.isEnabled=true
+                        binding.textInputLayout.error =null
+                    }
                 }
         )
 

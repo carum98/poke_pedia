@@ -33,7 +33,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private lateinit var pokemon:Pokemon
     private val args: DetailFragmentArgs by navArgs()
     private lateinit var pokemonDetail:PokemonDetail
-    private var listaDeEvoluciones= MutableLiveData<List<Pokemon>>()
     private  val adapter = AdaptadorDetalle()
 
     override fun onCreateView(
@@ -41,13 +40,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
-
         val view = binding.root
         pokemon = args.pokemon
         binding.elNombre.text = pokemon.name.capitalize()
-        //binding.laDescripcion.text = pokemon.url
-        pokemon.evoluciones= arrayListOf()
-
         viewModel.getPokemonDetail(pokemon.id)
         viewModel.getDataPokemonDetail().observe(viewLifecycleOwner)
         {
@@ -57,14 +52,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             binding.tipo.text = pokemonDetail.genera.firstOrNull{tipo -> tipo.language.name == "es"}?.genus?:""
             getEvolutionChain()
         }
-
-
         Glide.with(view.context)
             .load(pokemon.getImage())
             .into(binding.elPokenon)
-//        val viewModel = PokemonViewModel()
         return view
     }
+
 
     private fun getEvolutionChain() {
         var elEvolutionChainUrl = pokemonDetail.evolution_chain.url.split("/")
@@ -73,6 +66,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.getPokemonEvolutionData().observe(viewLifecycleOwner)
         {
             var evolutions=it.chain
+            pokemon.evoluciones= arrayListOf()
+            adapter.losPokemones = pokemon.evoluciones!!
+            binding.laListaDeEvoluciones.adapter = adapter
             MostrarResultado (evolutions.evolves_to.isEmpty())
             findEvolutions(evolutions)
         }
@@ -98,17 +94,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             binding.laListaDeEvoluciones.visibility =View.GONE
         }
     }
-
     private fun addEvolutions(pokemonName:String, idDelPokemon:String) {
         pokemon.evoluciones?.add(Pokemon(idDelPokemon,pokemonName,"",null))
         adapter.losPokemones = pokemon.evoluciones!!
         binding.laListaDeEvoluciones.adapter = adapter
 
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModelDetail.getRecentPokemonById(pokemon.id).observe(viewLifecycleOwner) {
             if(it != null){
                 var laEntidadDeRecientes = it
@@ -136,18 +129,21 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
     fun btnState(state:Boolean){
         if (state){
-            //binding.btnFavorito.setColorFilter(Color.YELLOW)
             binding.btnFavorito.setBackgroundColor(Color.YELLOW)
             binding.btnFavorito.setTextColor(Color.BLACK)
             val icon = resources.getDrawable(R.drawable.ic_favorite_black)
             binding.btnFavorito.setCompoundDrawablesRelativeWithIntrinsicBounds(icon,null,null,null)
         }else{
-            //binding.btnFavorito.setColorFilter(Color.WHITE)
             binding.btnFavorito.setBackgroundColor(Color.BLACK)
             binding.btnFavorito.setTextColor(Color.WHITE)
             val icon = resources.getDrawable(R.drawable.ic_favorite)
             binding.btnFavorito.setCompoundDrawablesRelativeWithIntrinsicBounds(icon,null,null,null)
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        pokemon.evoluciones= arrayListOf()
+        _binding = null
     }
 
 }
