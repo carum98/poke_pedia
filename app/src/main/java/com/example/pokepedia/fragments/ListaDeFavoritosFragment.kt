@@ -1,11 +1,14 @@
 package com.example.pokepedia.fragments
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -72,6 +75,11 @@ class ListaDeFavoritosFragment : Fragment() {
             if (losPokemonesFavoritos.size == 0) {
                 binding.noHayPokemon.visibility = View.VISIBLE
                 binding.busquedaFallida.visibility = View.GONE
+                binding.txtBusqueda.visibility = View.GONE
+                binding.searchButton.visibility = View.GONE
+            }else{
+                binding.txtBusqueda.visibility = View.VISIBLE
+                binding.searchButton.visibility = View.VISIBLE
             }
             adapter.losPokemones = losPokemonesFavoritos
             binding.listRecyclerView.adapter = adapter
@@ -95,6 +103,7 @@ class ListaDeFavoritosFragment : Fragment() {
         disposable.add(
             binding.searchButton.clicks()
                 .subscribe {
+                    hideKeyboard()
                     var elTextoDeBusqueda = binding.txtBusqueda.text.toString()
                     if (elTextoDeBusqueda.isEmpty()) {
                         getFavoriteList()
@@ -112,7 +121,14 @@ class ListaDeFavoritosFragment : Fragment() {
             false
         })
     }
+    fun hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
 
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         disposable.clear()
@@ -120,7 +136,7 @@ class ListaDeFavoritosFragment : Fragment() {
     }
 
     private fun searchPokemon(text: String) {
-        viewModelDetail.getFavoritePokemonByName(text).observe(viewLifecycleOwner) {
+        viewModelDetail.getFavoritePokemonByName(text.toLowerCase()).observe(viewLifecycleOwner) {
             losPokemonesFavoritos = arrayListOf()
             it.forEach {
                 var poke = Pokemon(

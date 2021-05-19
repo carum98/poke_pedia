@@ -1,10 +1,13 @@
 package com.example.pokepedia.fragments
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +15,7 @@ import com.example.pokepedia.adapters.AdaptadorPrincipal
 import com.example.pokepedia.databinding.FragmentListaPrincipalBinding
 import com.example.pokepedia.viewmodels.PokemonViewModel
 import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.view.focusChanges
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -41,11 +45,8 @@ class ListaPrincipalFragment : Fragment() {
     ): View {
         _binding = FragmentListaPrincipalBinding.inflate(inflater, container, false)
         val view = binding.root
-
         binding.listRecyclerView.adapter = adapter
-
         obtenerListaPrincipal()
-
         return view
     }
 
@@ -79,9 +80,10 @@ class ListaPrincipalFragment : Fragment() {
         disposable.add(
             binding.searchButton.clicks()
                 .subscribe {
-                    var elTextoDeBusqueda =binding.txtBusqueda.text.toString()
+                    hideKeyboard()
+                    var elTextoDeBusqueda =binding.txtBusqueda.text.toString().toLowerCase()
                     if(!elTextoDeBusqueda.isEmpty()){
-                        viewModel.getPokemon(binding.txtBusqueda.text.toString())
+                        viewModel.getPokemon(elTextoDeBusqueda)
                         viewModel.getPokemonList().observe(viewLifecycleOwner) {
                             MostrarResultado (it.isEmpty())
                         }
@@ -98,7 +100,25 @@ class ListaPrincipalFragment : Fragment() {
             false
         })
 
+        disposable.add(
+            binding.txtBusqueda.focusChanges().subscribe{
+                hideKeyboard()
+            }
+        )
+        disposable.add(
+            binding.list.clicks().subscribe{
+                hideKeyboard()
+                binding.txtBusqueda.clearFocus()
+            }
+        )
+    }
+    fun hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
 
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun searchPokemon(text: String) {

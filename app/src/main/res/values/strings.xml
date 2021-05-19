@@ -17,6 +17,7 @@
     <string name="empty_resent">No tiene pokemons recientes</string>
     <string name="textBusquedaFallida">El pokemon no se encuentra en la lista principal</string>
     <string name="textBusquedaFallidaFavoritos">El pokemon no se encuentra en la lista tus favoritos</string>
+    <string name="empty_evolucion">No tiene evoluciones</string>
     <string name="HintNombrePokemon">El nombre del Pokemon </string>
     <string name="btnBuscar">Buscar</string>
     <string name="imagendetitulo">ImagenDetitulo</string>

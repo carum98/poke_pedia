@@ -65,7 +65,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/elNombre" />
-
+    <com.example.pokepedia.widgets.EmptyView
+        android:id="@+id/noHayPokemon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:imagen="@drawable/pokemon_empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/laDescripcion"
+        app:title="@string/empty_evolucion" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/laListaDeEvoluciones"
         android:layout_width="0dp"

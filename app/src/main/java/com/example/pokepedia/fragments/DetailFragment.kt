@@ -45,7 +45,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val view = binding.root
         pokemon = args.pokemon
         binding.elNombre.text = pokemon.name.capitalize()
-        binding.laDescripcion.text = pokemon.url
+        //binding.laDescripcion.text = pokemon.url
         pokemon.evoluciones= arrayListOf()
 
         viewModel.getPokemonDetail(pokemon.id)
@@ -73,6 +73,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.getPokemonEvolutionData().observe(viewLifecycleOwner)
         {
             var evolutions=it.chain
+            MostrarResultado (evolutions.evolves_to.isEmpty())
             findEvolutions(evolutions)
         }
 
@@ -86,6 +87,15 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
         evolutions.evolves_to.forEach{
             findEvolutions(it)
+        }
+    }
+    private fun MostrarResultado(seDebeMostrar:Boolean) {
+        if(!seDebeMostrar){
+            binding.noHayPokemon.visibility = View.GONE
+            binding.laListaDeEvoluciones.visibility =View.VISIBLE
+        }else{
+            binding.noHayPokemon.visibility = View.VISIBLE
+            binding.laListaDeEvoluciones.visibility =View.GONE
         }
     }
 
